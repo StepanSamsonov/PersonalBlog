@@ -1,0 +1,15 @@
+form {
+  background-color: white;
+  border: solid white 5px;
+  margin-bottom: -20px;
+}
+#sub-button {
+  display: block;
+  width: 100%;
+}
+#form-butt {
+  width: 100%;
+}
+#text {
+  height: 300px;
+}

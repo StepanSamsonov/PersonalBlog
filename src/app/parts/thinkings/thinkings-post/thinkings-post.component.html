@@ -1,0 +1,51 @@
+<main>
+  <app-thinkings-form id="add-butt" (refreshform)="refreshform"></app-thinkings-form>
+  <ul class="list-group">
+    <li id="list-elem" *ngFor="let post of (thinkings)" class="list-group-item list-group-item-light">
+      <h2>{{post.title}}</h2>
+      <div id="post-text" *ngFor="let p of (post.ptext)">
+        <p>&emsp;{{p}}</p>
+      </div>
+      <p id="post-date">{{post.date}}</p>
+      <div>
+        <button class="btn btn-primary" id="chengebutt" (click)="opencloseLocForm(post.id)">
+          {{post.show ? 'Скрыть' : 'Изменить'}}</button>
+        <button class="btn btn-danger" id="delbutt" (click)="deletePost(post.id)">Удалить</button>
+      </div>
+
+      <div *ngIf="post.show">
+        <form class="form-horizontal" id="main-form" [formGroup]="loc_form">
+          <div class="form-group">
+            <label for="change-title">Заголовок</label>
+            <input type="text" id="change-title" class="form-control" placeholder="Enter title"
+                   formControlName="title" value="{{post.title}}">
+          </div>
+          <div class="form-group">
+            <label>Текст</label>
+            <textarea type="text" id="change-text" class="form-control" placeholder="Text"
+                      formControlName="text" value="{{post.text}}"></textarea>
+          </div>
+          <div class="form-group ">
+            <input type="submit" class="btn btn-success" value="Изменить"
+                   id="sub-button" (click)="changePost(post.id)">
+          </div>
+        </form>
+      </div>
+    </li>
+  </ul>
+  <div *ngIf="pages_count > 1" id="load-mode-cont">
+    <div *ngIf="current_page > 1">
+      <button class="btn btn-primary" (click)="changePage(0)">1</button>
+    </div>
+    <div *ngIf="current_page > 0">
+      <button class="btn btn-primary" (click)="changePage(current_page-1)">{{current_page}}</button>
+    </div>
+    <button class="btn btn-primary">{{current_page}}</button>
+    <div *ngIf="current_page != pages_count - 1">
+      <button class="btn btn-primary" (click)="changePage(current_page+1)">{{current_page+2}}</button>
+    </div>
+    <div *ngIf="current_page < pages_count - 1">
+      <button class="btn btn-primary" (click)="changePage(pages_count-1)">{{pages_count}}</button>
+    </div>
+  </div>
+</main>

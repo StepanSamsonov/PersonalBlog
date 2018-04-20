@@ -1,0 +1,26 @@
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#delbutt {
+  display: inline-block;
+}
+#chengebutt {
+  display: inline-block;
+}
+#list-elem {
+  margin: auto;
+  width: 60%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-width: 10px;
+}
+#description-content {
+  word-wrap: break-word;
+}
+#add-button {
+  margin: auto;
+  margin-top: 10px;
+  width: 40%;
+}

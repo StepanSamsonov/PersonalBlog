@@ -1,0 +1,13 @@
+#add-button {
+  width: 100%;
+}
+form {
+  background-color: white;
+  border: solid white;
+  border-width: 5px;
+  margin-bottom: -20px;
+}
+#sub-button {
+  display: block;
+  width: 100%;
+}

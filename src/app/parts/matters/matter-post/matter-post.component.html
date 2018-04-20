@@ -1,0 +1,48 @@
+<main>
+  <app-matter-form id="add-button" (refreshform)="refreshform"></app-matter-form>
+  <ul class="list-group">
+    <li id="list-elem" *ngFor="let matter of (matters) | sortBy: ['diff']"
+        class={{matter.priority}}>
+      <h2>{{matter.name}}</h2>
+      <p id="description-content">{{matter.description}}</p>
+      <p>Дата окончания: {{matter.timeover}} | Осталось: {{matter.diff}} {{matter.days}} </p>
+      <div>
+        <button class="btn btn-primary" id="chengebutt" (click)="opencloseLocForm(matter.id)">
+          {{matter.show ? 'Скрыть' : 'Изменить'}}</button>
+        <button class="btn btn-danger" id="delbutt" (click)="deleteObject(matter.id)">Удалить</button>
+      </div>
+
+      <div *ngIf="matter.show">
+        <form class="form-horizontal" id="main-form" [formGroup]="loc_form">
+          <div class="form-group">
+            <label for="name">Название</label>
+            <input type="text" id="name" class="form-control" placeholder="Enter name"
+                   formControlName="name" value="{{matter.name}}">
+          </div>
+          <div class="form-group">
+            <label>Описание</label>
+            <textarea type="text" id="description" class="form-control" placeholder="Description"
+                      formControlName="description" value="{{matter.description}}"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="timeover">Дедлайн</label>
+            <input type="date" id="timeover" class="form-control" formControlName="timeover" value="{{matter.timeover}}">
+          </div>
+          <div class="form-group">
+            <label for="priority">Приоритет</label>
+            <select class="form-control" id="priority" formControlName="priority" [(ngModel)]='selectBox'>
+              <option id="green-sel" selected="selected" value="Green">Green</option>
+              <option id="yellow-sel">Yellow</option>
+              <option id="red-sel">Red</option>
+            </select>
+          </div>
+          <div class="form-group ">
+            <input type="submit" class="btn btn-success" id="change-button" value="Изменить"
+                   (click)="changePost(matter.id)">
+          </div>
+        </form>
+      </div>
+
+    </li>
+  </ul>
+</main>

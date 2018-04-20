@@ -1,0 +1,36 @@
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#post-text {
+  word-wrap: break-word
+}
+#add-butt {
+  margin: auto;
+  margin-top: 10px;
+  width: 40%;
+}
+#list-elem {
+  margin: auto;
+  color: black;
+  width: 60%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: solid lightgrey;
+  border-width: 2px;
+}
+#change-text {
+  height: 200px;
+}
+#post-date {
+  text-align: right;
+}
+#load-more-butt {
+  width: 50%;
+  margin-bottom: 5px;
+}
+#load-mode-cont {
+  display: flex;
+  justify-content: center;
+}

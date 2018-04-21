@@ -3,13 +3,20 @@
   <ul class="list-group">
     <li id="list-elem" *ngFor="let matter of (matters) | sortBy: ['diff']"
         class={{matter.priority}}>
-      <h2>{{matter.name}}</h2>
-      <p id="description-content">{{matter.description}}</p>
-      <p>Дата окончания: {{matter.timeover}} | Осталось: {{matter.diff}} {{matter.days}} </p>
-      <div>
-        <button class="btn btn-primary" id="chengebutt" (click)="opencloseLocForm(matter.id)">
-          {{matter.show ? 'Скрыть' : 'Изменить'}}</button>
-        <button class="btn btn-danger" id="delbutt" (click)="deleteObject(matter.id)">Удалить</button>
+      <div id="content-container">
+        <div id="left-content">
+          <h2>{{matter.name}}</h2>
+          <p id="description-content">{{matter.description}}</p>
+          <p>Дата окончания: {{matter.timeover}} | Осталось: {{matter.diff}} {{matter.days}} </p>
+          <div>
+            <button class="btn btn-primary" id="chengebutt" (click)="opencloseLocForm(matter.id)">
+              {{matter.show ? 'Скрыть' : 'Изменить'}}</button>
+            <button class="btn btn-danger" id="delbutt" (click)="deleteObject(matter.id)">Удалить</button>
+          </div>
+        </div>
+        <div id="right-content">
+          <img id="matter-icon" src="{{matter.icon}}">
+        </div>
       </div>
 
       <div *ngIf="matter.show">

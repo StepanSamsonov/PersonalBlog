@@ -33,19 +33,19 @@
       </div>
     </li>
   </ul>
-  <div *ngIf="pages_count > 1" id="load-mode-cont">
+  <div *ngIf="pages_count > 1" id="pages-cont">
     <div *ngIf="current_page > 1">
-      <button class="btn btn-primary" (click)="changePage(0)">1</button>
+      <button class="btn btn-link" (click)="changePage(0)">1</button>/ ... /
     </div>
     <div *ngIf="current_page > 0">
-      <button class="btn btn-primary" (click)="changePage(current_page-1)">{{current_page}}</button>
+      <button class="btn btn-link" (click)="changePage(current_page-1)">{{current_page}}</button>/
     </div>
-    <button class="btn btn-primary">{{current_page}}</button>
+    <button class="btn btn-link" disabled>{{current_page+1}}</button>
     <div *ngIf="current_page != pages_count - 1">
-      <button class="btn btn-primary" (click)="changePage(current_page+1)">{{current_page+2}}</button>
+      /<button class="btn btn-link" (click)="changePage(current_page+1)">{{current_page+2}}</button>
     </div>
-    <div *ngIf="current_page < pages_count - 1">
-      <button class="btn btn-primary" (click)="changePage(pages_count-1)">{{pages_count}}</button>
+    <div *ngIf="current_page < pages_count - 1 && current_page+1 != pages_count-1">
+      / ... /<button class="btn btn-link" (click)="changePage(pages_count-1)">{{pages_count}}</button>
     </div>
   </div>
 </main>

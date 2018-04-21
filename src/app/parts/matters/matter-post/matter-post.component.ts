@@ -5,7 +5,7 @@ import { Observable } from "rxjs/Observable";
 import { MatterListService } from "./matter-post.service";
 import {Subject} from "rxjs/Subject";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-
+import {links} from '../../../stuff/links';
 
 @Component({
   selector: 'app-matter-post',
@@ -83,14 +83,19 @@ export class MatterPostComponent implements OnInit {
       this.db.object('matters/' + id).update({timeover: timeover});
     }
     if (priority != '') {
+      let icon = '';
       if (priority === 'Red') {
         priority = 'list-group-item list-group-item-danger';
+        icon = links.red_notification_icon;
       } else if (priority === 'Yellow') {
         priority = 'list-group-item list-group-item-warning';
+        icon = links.yellow_notification_icon;
       } else if (priority === 'Green') {
         priority = 'list-group-item list-group-item-success';
+        icon = links.green_notification_icon;
       }
       this.db.object('matters/' + id).update({priority: priority});
+      this.db.object('matters/' + id).update({icon: icon});
     }
     this.MatterListService.getMatters().subscribe(data => {
       this.matters = data;

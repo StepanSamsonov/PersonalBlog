@@ -13,7 +13,7 @@ export class ThinkingsListService {
   constructor(private http: HttpClient) {
   }
 
-  getThinkings(page: number): Observable<any[]> {
+  getThinkings(): Observable<any[]> {
     return this.http.get('https://dashablog-55ba7.firebaseio.com/blog.json')
       .map((data) => {
         if (!data) {
@@ -21,7 +21,6 @@ export class ThinkingsListService {
         }
         return Object.entries(data)
           .reverse()
-          .slice(page*5, Math.min(page*5+5, Object.entries(data).length))
           .map(function ([id, value]) {
             const ptext = value.text.split('\n');
             const show = false;
@@ -29,11 +28,4 @@ export class ThinkingsListService {
           })
       });
   };
-
-  getPagesCount(): any {
-    return this.http.get('https://dashablog-55ba7.firebaseio.com/count_pages.json')
-      // .map((data) => {
-      //   return Object.entries(data);
-      // });
-  }
 }

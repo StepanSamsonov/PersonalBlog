@@ -16,11 +16,26 @@ main {
   margin-bottom: 5px;
   border-width: 10px;
 }
-#description-content {
-  word-wrap: break-word;
-}
 #add-button {
   margin: auto;
   margin-top: 10px;
   width: 40%;
+}
+#content-container {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+}
+#left-content {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: normal;
+  width: 80%;
+}
+#right-content {
+
+}
+#matter-icon {
+  width: 150px;
+  height: 150px;
 }

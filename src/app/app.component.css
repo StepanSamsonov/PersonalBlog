@@ -31,3 +31,7 @@ main {
   display: flex;
   justify-content: center;
 }
+#sign-in-container {
+  display: flex;
+  justify-content: right;
+}

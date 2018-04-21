@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AngularFirestore} from "angularfire2/firestore";
 import { AngularFireDatabase } from 'angularfire2/database';
+import {links} from "../../../stuff/links";
 
 
 @Component({

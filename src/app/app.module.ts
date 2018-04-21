@@ -11,10 +11,9 @@ import {HttpClientModule} from '@angular/common/http';
 import { MatterPostModule } from './parts/matters/matter-post/matter-post.module';
 import { MatterFormModule } from './parts/matters/matter-form/matter-form.module';
 import { AppRoutingModule} from './app-routing/app-routing-module';
-//import { HomeComponent } from './parts/home/home.component';
 import {HomeModule} from "./parts/home/home.module";
-import { ThinkingsPostComponent } from './parts/thinkings/thinkings-post/thinkings-post.component';
 import {ThinkingsPostModule} from "./parts/thinkings/thinkings-post/thinkings-post.module";
+import {NotificationsModule} from "./notifications/notifications.module";
 
 registerLocaleData(localeRu);
 
@@ -31,7 +30,8 @@ registerLocaleData(localeRu);
     AngularFireDatabaseModule,
     AppRoutingModule,
     HomeModule,
-    ThinkingsPostModule
+    ThinkingsPostModule,
+    NotificationsModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'ru'},

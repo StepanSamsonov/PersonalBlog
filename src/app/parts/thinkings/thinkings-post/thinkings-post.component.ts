@@ -14,6 +14,7 @@ export class ThinkingsPostComponent implements OnInit {
   thinkings: any[];
   pages_count: any;
   current_page: number = 0;
+  posts_per_pages: number = 5;
   @Input() refreshform = new Subject();
   loc_form: FormGroup;
 
@@ -24,10 +25,9 @@ export class ThinkingsPostComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pages_count = this.ThinkingsListService.getPagesCount();
-    console.log(this.pages_count);
-    this.ThinkingsListService.getThinkings(this.current_page).subscribe(data => {
-      this.thinkings = data;
+    this.ThinkingsListService.getThinkings().subscribe(data => {
+      this.thinkings = data.slice(0, Math.min(this.posts_per_pages, data.length));
+      this.pages_count = Math.floor(data.length/this.posts_per_pages)+1;
     });
     // this.refreshform.subscribe(()=> {
     //   this.ThinkingsListService.getThinkings().subscribe(data => {
@@ -42,8 +42,9 @@ export class ThinkingsPostComponent implements OnInit {
 
   deletePost(itemKey) {
     this.db.object('blog/' + itemKey ).remove();
-    this.ThinkingsListService.getThinkings(this.current_page).subscribe(data => {
-      this.thinkings = data;
+    this.ThinkingsListService.getThinkings().subscribe(data => {
+      this.thinkings = data.slice(this.current_page*this.posts_per_pages,
+        Math.min((this.current_page+1)*this.posts_per_pages, data.length));
     });
   }
 
@@ -79,16 +80,18 @@ export class ThinkingsPostComponent implements OnInit {
     if (text != '') {
       this.db.object('blog/' + id).update({text: text});
     }
-    this.ThinkingsListService.getThinkings(this.current_page).subscribe(data => {
-      this.thinkings = data;
+    this.ThinkingsListService.getThinkings().subscribe(data => {
+      this.thinkings = data.slice(this.current_page*this.posts_per_pages,
+        Math.min((this.current_page+1)*this.posts_per_pages, data.length));
     });
     this.createLocForm();
   }
 
   changePage(numb) {
     this.current_page = numb;
-    this.ThinkingsListService.getThinkings(this.current_page).subscribe(data => {
-      this.thinkings = data;
+    this.ThinkingsListService.getThinkings().subscribe(data => {
+      this.thinkings = data.slice(this.current_page*this.posts_per_pages,
+        Math.min((this.current_page+1)*this.posts_per_pages, data.length));
     });
   }
 }

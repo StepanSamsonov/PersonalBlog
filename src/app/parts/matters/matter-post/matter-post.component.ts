@@ -6,6 +6,8 @@ import { MatterListService } from "./matter-post.service";
 import {Subject} from "rxjs/Subject";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {links} from '../../../stuff/links';
+import {FormComponent} from '../matter-form/form.component';
+
 
 @Component({
   selector: 'app-matter-post',
@@ -15,7 +17,6 @@ import {links} from '../../../stuff/links';
 export class MatterPostComponent implements OnInit {
 
   matters: any[];
-  @Input() refreshform = new Subject();
   loc_form: FormGroup;
   selectBox: string;
 
@@ -27,22 +28,32 @@ export class MatterPostComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.updateMatterList();
     //this.matters = this.db.list('matters').valueChanges();
+    // this.MatterListService.getMatters().subscribe(data => {
+    //   this.matters = data;
+    // });
+    // this.refreshform.subscribe(()=> {
+    //   this.updateMatterList();
+    // })
+  }
+
+  refreshForm() {
+    this.updateMatterList();
+  }
+
+  updateMatterList() {
     this.MatterListService.getMatters().subscribe(data => {
       this.matters = data;
     });
-    this.refreshform.subscribe(()=> {
-      this.MatterListService.getMatters().subscribe(data => {
-      this.matters = data;
-      });
-    })
   }
 
   deleteObject(itemKey) {
     this.db.object('matters/' + itemKey ).remove();
-    this.MatterListService.getMatters().subscribe(data => {
-      this.matters = data;
-    });
+    // this.MatterListService.getMatters().subscribe(data => {
+    //   this.matters = data;
+    // });
+    this.updateMatterList();
   }
 
   createLocForm() {
@@ -97,9 +108,10 @@ export class MatterPostComponent implements OnInit {
       this.db.object('matters/' + id).update({priority: priority});
       this.db.object('matters/' + id).update({icon: icon});
     }
-    this.MatterListService.getMatters().subscribe(data => {
-      this.matters = data;
-    });
+    // this.MatterListService.getMatters().subscribe(data => {
+    //   this.matters = data;
+    // });
+    this.updateMatterList();
     this.createLocForm();
   }
 }

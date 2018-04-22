@@ -1,5 +1,5 @@
 <main>
-  <app-thinkings-form id="add-butt" (refreshform)="refreshform"></app-thinkings-form>
+  <app-thinkings-form id="add-butt" (refreshform)="refreshForm()"></app-thinkings-form>
   <ul class="list-group">
     <li id="list-elem" *ngFor="let post of (thinkings)" class="list-group-item list-group-item-light">
       <h2>{{post.title}}</h2>

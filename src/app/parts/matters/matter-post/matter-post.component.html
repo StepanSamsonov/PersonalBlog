@@ -1,5 +1,5 @@
 <main>
-  <app-matter-form id="add-button" (refreshform)="refreshform"></app-matter-form>
+  <app-matter-form id="add-button" (refreshForm)="refreshForm()"></app-matter-form>
   <ul class="list-group">
     <li id="list-elem" *ngFor="let matter of (matters) | sortBy: ['diff']"
         class={{matter.priority}}>

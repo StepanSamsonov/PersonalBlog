@@ -15,7 +15,6 @@ export class ThinkingsPostComponent implements OnInit {
   pages_count: any;
   current_page: number = 0;
   posts_per_pages: number = 5;
-  @Input() refreshform = new Subject();
   loc_form: FormGroup;
 
   constructor(private db: AngularFireDatabase,
@@ -29,15 +28,13 @@ export class ThinkingsPostComponent implements OnInit {
       this.thinkings = data.slice(0, Math.min(this.posts_per_pages, data.length));
       this.pages_count = Math.floor(data.length/this.posts_per_pages)+1;
     });
-    // this.refreshform.subscribe(()=> {
-    //   this.ThinkingsListService.getThinkings().subscribe(data => {
-    //     this.thinkings = data;
-    //   });
-    // });
+  }
 
-    // for (let i=0; i<this.thinkings.length%5; ++i) {
-    //   this.think_buff.push(this.thinkings[i]);
-    // }
+  refreshForm() {
+    this.ThinkingsListService.getThinkings().subscribe(data => {
+      this.thinkings = data.slice(0, Math.min(this.posts_per_pages, data.length));
+      this.pages_count = Math.floor(data.length/this.posts_per_pages)+1;
+    });
   }
 
   deletePost(itemKey) {

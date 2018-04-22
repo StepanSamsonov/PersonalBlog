@@ -15,14 +15,9 @@ export class ThinkingsFormComponent {
   show = false;
   @Output() refreshform = new EventEmitter();
 
-  // @Output() get refreshform() {
-  //   return this._refreshform.asObservable();
-  // }
-
   constructor(private fb: FormBuilder, private db: AngularFireDatabase) {
     this.createForm();
   }
-
 
   createForm() {
     this.form = this.fb.group({
@@ -42,7 +37,7 @@ export class ThinkingsFormComponent {
     const date = time.getDate() + "/" + (time.getMonth()+1) + "/" + time.getFullYear();
     let formRequest = { title, text, date};
     this.db.list('blog').push(formRequest);
-    this.refreshform.emit();
     this.form.reset();
+    this.refreshform.emit();
   }
 }

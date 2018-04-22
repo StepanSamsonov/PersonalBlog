@@ -14,6 +14,7 @@ import { AppRoutingModule} from './app-routing/app-routing-module';
 import {HomeModule} from "./parts/home/home.module";
 import {ThinkingsPostModule} from "./parts/thinkings/thinkings-post/thinkings-post.module";
 import {NotificationsModule} from "./notifications/notifications.module";
+import {ImportantModule} from './parts/important/important.module';
 
 registerLocaleData(localeRu);
 
@@ -31,6 +32,7 @@ registerLocaleData(localeRu);
     AppRoutingModule,
     HomeModule,
     ThinkingsPostModule,
+    ImportantModule,
     NotificationsModule
   ],
   providers: [

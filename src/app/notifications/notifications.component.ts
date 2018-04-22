@@ -53,7 +53,7 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private MatterListService: MatterListService) {
     setInterval(() => {
       const now = new Date();
-      if (true ||now.getHours() == this.hours_to_remind && now.getMinutes() == this.minutes_to_remid) {
+      if (now.getHours() == this.hours_to_remind && now.getMinutes() == this.minutes_to_remid) {
         MatterListService.getMatters().subscribe(data => {
           this.matters = data;
           for (let matter of this.matters) {

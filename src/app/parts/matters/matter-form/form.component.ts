@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AngularFirestore} from "angularfire2/firestore";
 import { AngularFireDatabase } from 'angularfire2/database';
 import {links} from "../../../stuff/links";
-
+import {MatterPostComponent} from '../matter-post/matter-post.component'
 
 @Component({
   selector: 'app-matter-form',
@@ -15,17 +15,12 @@ export class FormComponent {
   form: FormGroup;
   show = false;
   selectBox: string;
-  @Output() refreshform = new EventEmitter();
-
-  // @Output() get refreshform() {
-  //   return this._refreshform.asObservable();
-  // }
+  @Output() refreshForm = new EventEmitter();
 
   constructor(private fb: FormBuilder, private db: AngularFireDatabase) {
     this.selectBox = "Green";
     this.createForm();
   }
-
 
   createForm() {
     this.form = this.fb.group({
@@ -52,7 +47,7 @@ export class FormComponent {
     }
     let formRequest = { name, description, timeover, priority };
     this.db.list('matters').push(formRequest);
-    this.refreshform.emit();
     this.form.reset();
+    this.refreshForm.emit();
   }
 }

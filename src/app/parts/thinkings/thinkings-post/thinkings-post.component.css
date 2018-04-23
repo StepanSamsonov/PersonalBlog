@@ -4,7 +4,7 @@ main {
   justify-content: center;
 }
 #post-text {
-  word-wrap: break-word
+  word-wrap: break-word;
 }
 #add-butt {
   margin: auto;

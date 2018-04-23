@@ -1,3 +1,95 @@
-<p>
-  important works!
-</p>
+<div id="main-container">
+  <div id="way-container" class="alert alert-dark">
+    <div *ngFor="let part of (getWay())">
+      <div id="way-part"><a (click)="returnDir(part)">{{part}}</a>&nbsp;/&nbsp;</div>
+    </div>
+  </div>
+
+  <div id="dir-shower" class="list-group-item list-group-item-light">
+    <div>
+      <div class="list-group" *ngFor="let catalog of (availabel_catalogs)">
+        <div class="line-elem-container">
+          <div class="list-group-item list-group-item-action" (click)="changeDir(catalog.name)">
+            <div class="catalog-name">{{catalog.name}}</div>
+          </div>
+          <button type="button" class="btn btn-outline-danger"
+                  (click)="delDir(catalog.id, catalog.name)">&times;</button>
+        </div>
+      </div>
+      <div class="list-group" *ngFor="let file of (availabel_files)">
+        <div class="line-elem-container">
+          <div class="list-group-item list-group-item-action list-group-item-info" (click)="openFile(file.id)">
+            <div class="catalog-name">{{file.name}}</div>
+          </div>
+          <button type="button" class="btn btn-outline-danger"
+                  (click)="delFile(file.id)">&times;</button>
+        </div>
+      </div>
+      <div *ngIf="(availabel_catalogs.length === 0 && availabel_files.length === 0)">
+        <p>Здесь ничего нет</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="buttons-setting">
+    <div *ngIf="show_change_content_form">
+      <button class="btn btn-success" (click)="changeFileSubmit()">
+        Сохранить
+      </button>
+    </div>
+    <button class="btn btn-primary spec-butt" (click)="showcloseForm()" id="add-button">
+      {{show_create_form ? 'Скрыть' : 'Создать'}}
+    </button>
+    <button id="change-file-button" class="btn btn-primary spec-butt" (click)="changeFile(content_id)">
+      {{show_change_content_form ? 'Отмена' : 'Изменить'}}
+    </button>
+  </div>
+
+  <div id="create-form-container" *ngIf="show_create_form">
+    <form class="form-horizontal" [formGroup]="dir_form" id="create-form">
+      <div class="form-group">
+        <label for="form-title">Имя</label>
+        <input type="text" class="form-control" id="form-title"
+               formControlName="name" placeholder="Enter name">
+      </div>
+      <div class="form-group">
+        <label for="create-type">Тип</label>
+        <select id="create-type" class="form-control" formControlName="type" [(ngModel)]='selectBox'>
+          <option selected="selected" value="file">Файл</option>
+          <option value="catalog">Папка</option>
+        </select>
+      </div>
+      <button class="btn btn-success" (click)="createFile()">Создать</button>
+    </form>
+  </div>
+
+  <div id="change-file-form" *ngIf="show_change_content_form">
+    <form class="form-horizontal" [formGroup]="change_file_form">
+      <div class="form-group list-group-item list-group-item-secondary">
+        <input type="text" class="form-control" id="form-change-name"
+               formControlName="name" placeholder="Name" value="{{content_title}}">
+      </div>
+      <div class="form-group">
+        <textarea type="text" class="form-control" id="form-change-text"
+                  formControlName="text" placeholder="Text" value="{{content.join('\n')}}"></textarea>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="show_content" id="content-container">
+    <div *ngIf="(content.length !== 0)">
+      {{setChangeFileButton(false)}}
+      <h2 class="list-group-item list-group-item-secondary">{{content_title}}</h2>
+      <div class="text-content" id="text-content-container">
+        <div *ngFor="let par of content">
+          <p id="content-paragraph">&emsp;{{par}}</p>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="(content.length === 0)">
+      {{setChangeFileButton(true)}}
+      <h2 class="list-group-item list-group-item-secondary">Пусто</h2>
+      <div class="text-content">&emsp;Тут нечего показывать. Уходите.</div>
+    </div>
+  </div>
+</div>

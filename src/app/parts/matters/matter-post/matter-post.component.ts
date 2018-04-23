@@ -29,13 +29,6 @@ export class MatterPostComponent implements OnInit {
 
   ngOnInit() {
     this.updateMatterList();
-    //this.matters = this.db.list('matters').valueChanges();
-    // this.MatterListService.getMatters().subscribe(data => {
-    //   this.matters = data;
-    // });
-    // this.refreshform.subscribe(()=> {
-    //   this.updateMatterList();
-    // })
   }
 
   refreshForm() {
@@ -50,9 +43,6 @@ export class MatterPostComponent implements OnInit {
 
   deleteObject(itemKey) {
     this.db.object('matters/' + itemKey ).remove();
-    // this.MatterListService.getMatters().subscribe(data => {
-    //   this.matters = data;
-    // });
     this.updateMatterList();
   }
 
@@ -105,12 +95,8 @@ export class MatterPostComponent implements OnInit {
         priority = 'list-group-item list-group-item-success';
         icon = links.green_notification_icon;
       }
-      this.db.object('matters/' + id).update({priority: priority});
-      this.db.object('matters/' + id).update({icon: icon});
+      this.db.object('matters/' + id).update({priority: priority, icon: icon});
     }
-    // this.MatterListService.getMatters().subscribe(data => {
-    //   this.matters = data;
-    // });
     this.updateMatterList();
     this.createLocForm();
   }

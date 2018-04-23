@@ -1,3 +1,39 @@
-<p>
-  home works!
-</p>
+<div>
+  <div id="rec-not-cont">
+    <h2>Получение уведомлений</h2>
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="btn btn-secondary active">
+        <input type="radio" name="options" id="option1" autocomplete="off" checked> On
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="options" id="option2" autocomplete="off"> Off
+      </label>
+    </div>
+    <button type="button" class="btn btn-success">Изменить</button>
+  </div>
+
+  <div id="set-time-not-cont">
+    <h2>Время получения уведомлений</h2>
+    <form class="form-horizontal" [formGroup]="change_time_form">
+      <div class="form-group">
+        <input type="number" class="form-control" placeholder="Минуты"
+               value="time_mins" formControlName="mins">
+      </div>
+      <div class="form-group">
+        <input type="number" class="form-control" placeholder="Часы"
+               value="time_hours" formControlName="hours">
+      </div>
+      <button type="submit" class="btn btn-success" (click)="changeTime()">Изменить</button>
+    </form>
+  </div>
+</div>
+
+<div id="change-email-form-cont">
+  <h2>Сменить почту</h2>
+  <form>
+    <div class="form-group">
+      <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Email">
+    </div>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>

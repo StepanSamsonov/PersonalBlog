@@ -12,21 +12,32 @@ export class HomeComponent implements OnInit {
   change_time_form: FormGroup;
   time_mins: string;
   time_hours: string;
+  change_email_form: FormGroup;
+  main_email: string;
 
   constructor(private fb: FormBuilder,
               private db: AngularFireDatabase) { }
 
   ngOnInit() {
     this.createTimeForm();
-    this.db.list('const/time').push({mins: 0, hours: 12});
-    let data = this.db.object('const/time').valueChanges();
-    console.log(data);
+    this.createEmailForm();
+    this.db.object('const').valueChanges().subscribe(data => {
+      this.time_hours = (data as any).hours;
+      this.time_mins = (data as any).mins;
+      this.main_email = (data as any).email;
+    })
   }
 
   createTimeForm() {
     this.change_time_form = this.fb.group({
       mins: ['', Validators.required],
       hours: ['', Validators.required],
+    });
+  }
+
+  createEmailForm() {
+    this.change_email_form = this.fb.group({
+      email: ['', Validators.required],
     });
   }
 

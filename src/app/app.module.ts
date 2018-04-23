@@ -24,7 +24,6 @@ registerLocaleData(localeRu);
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,12 +37,10 @@ registerLocaleData(localeRu);
     ThinkingsPostModule,
     ImportantModule,
     NotificationsModule,
-    AuthService,
     LoginModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'ru'},
-    AuthService
   ],
   bootstrap: [
     AppComponent

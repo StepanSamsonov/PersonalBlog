@@ -17,11 +17,11 @@
     <form class="form-horizontal" [formGroup]="change_time_form">
       <div class="form-group">
         <input type="number" class="form-control" placeholder="Минуты"
-               value="time_mins" formControlName="mins">
+               value="{{time_mins}}" formControlName="mins">
       </div>
       <div class="form-group">
         <input type="number" class="form-control" placeholder="Часы"
-               value="time_hours" formControlName="hours">
+               value="{{time_hours}}" formControlName="hours">
       </div>
       <button type="submit" class="btn btn-success" (click)="changeTime()">Изменить</button>
     </form>
@@ -30,9 +30,9 @@
 
 <div id="change-email-form-cont">
   <h2>Сменить почту</h2>
-  <form>
+  <form class="form-horizontal" [formGroup]="change_email_form">
     <div class="form-group">
-      <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Email">
+      <input type="email" class="form-control" value="{{main_email}}" placeholder="Email">
     </div>
     <button type="submit" class="btn btn-success">Submit</button>
   </form>

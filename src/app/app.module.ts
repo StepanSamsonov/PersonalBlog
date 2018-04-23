@@ -15,12 +15,16 @@ import {HomeModule} from "./parts/home/home.module";
 import {ThinkingsPostModule} from "./parts/thinkings/thinkings-post/thinkings-post.module";
 import {NotificationsModule} from "./notifications/notifications.module";
 import {ImportantModule} from './parts/important/important.module';
+import {AuthService} from "./auth/auth.service";
+import { LoginComponent } from './auth/login/login.component';
+import {LoginModule} from "./auth/login/login.module";
 
 registerLocaleData(localeRu);
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,10 +37,13 @@ registerLocaleData(localeRu);
     HomeModule,
     ThinkingsPostModule,
     ImportantModule,
-    NotificationsModule
+    NotificationsModule,
+    AuthService,
+    LoginModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'ru'},
+    AuthService
   ],
   bootstrap: [
     AppComponent

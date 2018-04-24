@@ -7,7 +7,7 @@ import {Subject} from "rxjs/Subject";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {links} from '../../../stuff/links';
 import {FormComponent} from '../matter-form/form.component';
-
+import {VisitsComponent} from '../../../visits/visits.component';
 
 @Component({
   selector: 'app-matter-post',
@@ -22,12 +22,14 @@ export class MatterPostComponent implements OnInit {
 
   constructor(private db: AngularFireDatabase,
               private MatterListService: MatterListService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private vs: VisitsComponent) {
     this.selectBox = "Green";
     this.createLocForm();
   }
 
   ngOnInit() {
+    this.vs.updateVisitData();
     this.updateMatterList();
   }
 

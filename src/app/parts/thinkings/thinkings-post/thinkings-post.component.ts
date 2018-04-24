@@ -3,6 +3,7 @@ import {AngularFireDatabase} from "angularfire2/database";
 import {Subject} from "rxjs/Subject";
 import {ThinkingsListService} from "./thinkings-post.service"
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {VisitsComponent} from '../../../visits/visits.component';
 
 @Component({
   selector: 'app-thinkings-post',
@@ -19,11 +20,13 @@ export class ThinkingsPostComponent implements OnInit {
 
   constructor(private db: AngularFireDatabase,
               private ThinkingsListService: ThinkingsListService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private vs: VisitsComponent) {
     this.createLocForm();
   }
 
   ngOnInit() {
+    this.vs.updateVisitData();
     this.ThinkingsListService.getThinkings().subscribe(data => {
       this.thinkings = data.slice(0, Math.min(this.posts_per_pages, data.length));
       this.pages_count = Math.floor(data.length/this.posts_per_pages)+1;

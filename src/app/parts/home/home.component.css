@@ -1,0 +1,61 @@
+#get-not-container {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#notific-title {
+  display: flex;
+  justify-content: center;
+}
+#rec-not-cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin-left: 10px;
+}
+#set-time-not-cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin-right: 10px;
+}
+#notific-content {
+  margin: auto;
+  width: 60%;
+  margin-top: 10px;
+  border: 1px solid grey;
+}
+#on-off-cont {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+#change-email-form-cont {
+  margin: auto;
+  width: 60%;
+  margin-top: 10px;
+  border: 1px solid grey;
+}
+#change-email-form-cont h2 {
+  display: flex;
+  justify-content: center;
+}
+#change-email-form-cont button {
+  width: 100%;
+  margin: auto;
+}
+#change-email-form-cont form {
+  width: 60%;
+  margin: auto;
+}
+#vacuum {
+  height: 10px;
+}
+#on-off-cont label {
+  width: 40%;
+}
+#cnv-container {
+  display: flex;
+  justify-content: center;
+}

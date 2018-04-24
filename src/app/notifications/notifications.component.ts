@@ -10,6 +10,8 @@ import {
 import { MatterListService } from '../parts/matters/matter-post/matter-post.service';
 import { links } from '../stuff/links';
 import {Observable} from "rxjs/Rx";
+import {AngularFireDatabase} from "angularfire2/database";
+import {HttpClient} from "@angular/common/http";
 
 
 declare var Notification;
@@ -49,34 +51,44 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
   minutes_to_remid: number = 0;
   time_notif: number = 30000;
   second_period_to_update_time: number = 60;
+  use_notific: boolean = false;
 
-  constructor(private MatterListService: MatterListService) {
-    setInterval(() => {
-      const now = new Date();
-      if (now.getHours() == this.hours_to_remind && now.getMinutes() == this.minutes_to_remid) {
-        MatterListService.getMatters().subscribe(data => {
-          this.matters = data;
-          for (let matter of this.matters) {
-            if (matter.diff < this.remind_period && matter.diff != 0) {
-              this.create();
-              this.closeDelay = this.time_notif;
-              this.title = "Внимание!";
-              this.body = matter.name + "\nОсталось: " + matter.diff + matter.days;
-              if (matter.priority.indexOf('success') != -1) {
-                this.icon = links.green_notification_icon;
+  constructor(private MatterListService: MatterListService,
+              private db: AngularFireDatabase) {
+
+    this.db.object('const').valueChanges().subscribe(data => {
+      const time = (data as any).time.split(':');
+      this.hours_to_remind = parseInt(time[0]);
+      this.minutes_to_remid = parseInt(time[1]);
+      this.use_notific = (data as any).push === 'true';
+
+      setInterval(() => {
+        const now = new Date();
+        if (now.getHours() == this.hours_to_remind && now.getMinutes() == this.minutes_to_remid && this.use_notific) {
+          MatterListService.getMatters().subscribe(data => {
+            this.matters = data;
+            for (let matter of this.matters) {
+              if (matter.diff < this.remind_period && matter.diff != 0) {
+                this.create();
+                this.closeDelay = this.time_notif;
+                this.title = "Внимание!";
+                this.body = matter.name + "\nОсталось: " + matter.diff + matter.days;
+                if (matter.priority.indexOf('success') != -1) {
+                  this.icon = links.green_notification_icon;
+                }
+                if (matter.priority.indexOf('warning') != -1) {
+                  this.icon = links.yellow_notification_icon;
+                }
+                if (matter.priority.indexOf('danger') != -1) {
+                  this.icon = links.red_notification_icon;
+                }
+                this.show();
               }
-              if (matter.priority.indexOf('warning') != -1) {
-                this.icon = links.yellow_notification_icon;
-              }
-              if (matter.priority.indexOf('danger') != -1) {
-                this.icon = links.red_notification_icon;
-              }
-              this.show();
             }
-          }
-        });
-      }
-    }, 1000*this.second_period_to_update_time);
+          });
+        }
+      }, 1000 * this.second_period_to_update_time);
+    });
   }
 
   public checkCompatibility () {

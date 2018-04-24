@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {ImportantService} from './important.service';
 import {AngularFireDatabase} from "angularfire2/database";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {VisitsComponent} from '../../visits/visits.component';
 
 @Component({
   selector: 'app-important',
@@ -30,9 +31,11 @@ export class ImportantComponent implements OnInit {
 
   constructor(private ImportantService: ImportantService,
               private db: AngularFireDatabase,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private vs: VisitsComponent) { }
 
   ngOnInit() {
+    this.vs.updateVisitData();
     this.setChangeFileButton(true);
     this.getDir();
     this.createDirForm();

@@ -15,9 +15,10 @@ import {HomeModule} from "./parts/home/home.module";
 import {ThinkingsPostModule} from "./parts/thinkings/thinkings-post/thinkings-post.module";
 import {NotificationsModule} from "./notifications/notifications.module";
 import {ImportantModule} from './parts/important/important.module';
-import {AuthService} from "./auth/auth.service";
-import { LoginComponent } from './auth/login/login.component';
-import {LoginModule} from "./auth/login/login.module";
+// import { LoginComponent } from './auth/login/login.component';
+// import {LoginModule} from "./auth/login/login.module";
+import {GoogleChart} from "../../node_modules/angular2-google-chart/directives/angular2-google-chart.directive";
+import {VisitsModule} from "./visits/visits.module";
 
 registerLocaleData(localeRu);
 
@@ -37,7 +38,9 @@ registerLocaleData(localeRu);
     ThinkingsPostModule,
     ImportantModule,
     NotificationsModule,
-    LoginModule
+    VisitsModule
+    //GoogleChart
+    //LoginModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'ru'},

@@ -35,3 +35,7 @@ main {
   display: flex;
   justify-content: right;
 }
+#enter-butt {
+  color: white;
+  text-decoration: none;
+}

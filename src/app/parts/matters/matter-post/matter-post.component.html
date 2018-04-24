@@ -6,7 +6,9 @@
       <div id="content-container">
         <div id="left-content">
           <h2>{{matter.name}}</h2>
-          <p id="description-content">{{matter.description}}</p>
+          <div *ngFor="let parag of matter.description">
+            <p id="description-content">{{parag}}</p>
+          </div>
           <p>Дата окончания: {{matter.timeover}} | Осталось: {{matter.diff}} {{matter.days}} </p>
           <div>
             <button class="btn btn-primary" id="chengebutt" (click)="opencloseLocForm(matter.id)">

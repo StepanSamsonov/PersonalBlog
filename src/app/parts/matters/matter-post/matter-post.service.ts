@@ -48,8 +48,9 @@ export class MatterListService {
               icon = links.dead_icon;
               diff = 0;
             }
+            const description = value.description.split('\n');
             const show = false;
-            return Object.assign(value, {id, diff, days, priority, show, icon});
+            return Object.assign(value, {id, diff, days, priority, show, icon, description});
           })
       });
   }

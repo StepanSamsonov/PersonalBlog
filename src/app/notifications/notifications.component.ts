@@ -49,47 +49,12 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
   remind_period: number = 20;
   hours_to_remind: number = 12;
   minutes_to_remid: number = 0;
-  time_notif: number = 30000;
+  time_notif: number = 2000;
   second_period_to_update_time: number = 60;
   use_notific: boolean = false;
 
   constructor(private MatterListService: MatterListService,
-              private db: AngularFireDatabase) {
-
-    this.db.object('const').valueChanges().subscribe(data => {
-      const time = (data as any).time.split(':');
-      this.hours_to_remind = parseInt(time[0]);
-      this.minutes_to_remid = parseInt(time[1]);
-      this.use_notific = (data as any).push === 'true';
-
-      setInterval(() => {
-        const now = new Date();
-        if (now.getHours() == this.hours_to_remind && now.getMinutes() == this.minutes_to_remid && this.use_notific) {
-          MatterListService.getMatters().subscribe(data => {
-            this.matters = data;
-            for (let matter of this.matters) {
-              if (matter.diff < this.remind_period && matter.diff != 0) {
-                this.create();
-                this.closeDelay = this.time_notif;
-                this.title = "Внимание!";
-                this.body = matter.name + "\nОсталось: " + matter.diff + matter.days;
-                if (matter.priority.indexOf('success') != -1) {
-                  this.icon = links.green_notification_icon;
-                }
-                if (matter.priority.indexOf('warning') != -1) {
-                  this.icon = links.yellow_notification_icon;
-                }
-                if (matter.priority.indexOf('danger') != -1) {
-                  this.icon = links.red_notification_icon;
-                }
-                this.show();
-              }
-            }
-          });
-        }
-      }, 1000 * this.second_period_to_update_time);
-    });
-  }
+              private db: AngularFireDatabase) { }
 
   public checkCompatibility () {
     return !!('Notification' in window);
@@ -116,6 +81,10 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public create () {
+    if (this.title === undefined) {
+      return 0;
+    }
+    //console.log(this.body);
     let notification = new Notification(this.title, {
       dir: this.dir,
       lang: this.lang,
@@ -173,6 +142,76 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
 
   public ngOnInit (): void {
     this.onLoad.emit({});
+
+    setInterval(() => {
+      let into = true;
+      this.db.object('/').valueChanges().subscribe(data => {
+        if (into) {
+          const time = (data as any).const.time.split(':');
+          this.hours_to_remind = parseInt(time[0]);
+          this.minutes_to_remid = parseInt(time[1]);
+          this.use_notific = (data as any).const.push === 'true';
+          const now = new Date();
+
+          if (this.hours_to_remind === now.getHours() && this.minutes_to_remid === now.getMinutes()
+            && this.use_notific) {
+
+            let matters = (data as any).matters;
+            let not_data = [];
+            for (let id in matters) {
+              let {description, icon, name, priority, timeover} = matters[id];
+              const now = new Date().getTime();
+              const end = new Date(timeover).getTime();
+              let diff = Math.ceil((end - now) / (1000 * 60 * 60 * 24));
+              let days = '';
+              if (diff % 10 == 1) {
+                days = ' день';
+              } else if (diff % 10 == 2 || diff % 10 == 3 || diff % 10 == 4) {
+                days = ' дня';
+              } else {
+                days = ' дней';
+              }
+              if (diff < this.remind_period && diff != 0) {
+                const closeDelay = this.time_notif;
+                const title = "Внимание!";
+                const body = name + "\nОсталось: " + diff + days;
+                let icon = '';
+                if (priority.indexOf('success') != -1) {
+                  icon = links.green_notification_icon;
+                }
+                if (priority.indexOf('warning') != -1) {
+                  icon = links.yellow_notification_icon;
+                }
+                if (priority.indexOf('danger') != -1) {
+                  icon = links.red_notification_icon;
+                }
+                not_data.push({closeDelay: closeDelay, title: title, body: body, icon: icon});
+              }
+            }
+
+            if (not_data) {
+              let i = 0;
+
+              let interval = setInterval(() => {
+                this.closeAll();
+                let elem = not_data[i];
+                this.title = elem.title;
+                this.body = elem.body;
+                this.closeDelay = elem.closeDelay;
+                this.icon = elem.icon;
+                this.create();
+                i += 1;
+                if (not_data.length === i) {
+                  clearInterval(interval);
+                }
+              }, 4000);
+              this.closeAll();
+            }
+          }
+        }
+        into = false;
+      });
+    }, 1000*this.second_period_to_update_time);
   }
 
   public ngOnDestroy (): void {

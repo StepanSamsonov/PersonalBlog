@@ -30,6 +30,7 @@ export class ImportantComponent implements OnInit {
   show_change_content_form: boolean = false;
   change_file_form: FormGroup;
   content_sub: any;
+  change_butt_dis: boolean = false;
 
   constructor(private ImportantService: ImportantService,
               private db: AngularFireDatabase,
@@ -113,26 +114,29 @@ export class ImportantComponent implements OnInit {
   }
 
   setChangeFileButton(value: boolean) {
-    (document.getElementById("change-file-button") as HTMLButtonElement).disabled = value;
+    // document.getElementById("change-file-button").disabled = value;
+    this.change_butt_dis = value;
   }
 
   openFile(id) {
     this.content_sub = this.db.object(this.current_dir + '/' + id).valueChanges().subscribe(
       data => {
-        this.content_title = (data as any).name;
+        if (data) {
+          this.content_title = (data as any).name;
 
-        if (id === this.content_id) {
-          this.special_counter += 1;
-        } else {
-          this.special_counter = 0;
+          if (id === this.content_id) {
+            this.special_counter += 1;
+          } else {
+            this.special_counter = 0;
+          }
+          if (this.special_counter % 2 === 1) {
+            this.content = [];
+          } else {
+            this.content = (data as any).text.split('\n');
+          }
+          this.content_id_before = this.content_id;
+          this.content_id = id;
         }
-        if (this.special_counter % 2 === 1) {
-          this.content = [];
-        } else {
-          this.content = (data as any).text.split('\n');
-        }
-        this.content_id_before = this.content_id;
-        this.content_id = id;
     });
   }
 

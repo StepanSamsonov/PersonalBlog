@@ -25,6 +25,7 @@
 .catalog-name {
   color: dodgerblue;
   margin-right: 300px;
+  font-size: large;
 }
 #catalog-name-file {
   color: dodgerblue;
@@ -35,6 +36,7 @@
 }
 .line-elem-container {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
 }
 .text-content {
@@ -71,4 +73,7 @@
 .spec-butt {
   width: 14%;
   margin-left: 10px;
+}
+.btn-outline-danger {
+
 }

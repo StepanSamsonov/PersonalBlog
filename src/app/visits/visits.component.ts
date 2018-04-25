@@ -38,7 +38,7 @@ export class VisitsComponent {
       const now_seconds = now_date.getTime() / 1000;
       let visit_data = (data as any).chart_data.split(' ').reverse().map(Number);
       if (now_date_form > last_date_form) {
-        let diff_days = Math.floor((now_seconds - last_seconds)/(60*60*24));
+        let diff_days = Math.ceil((now_seconds - last_seconds)/(60*60*24));
         while (diff_days > 0) {
           visit_data.pop();
           visit_data.unshift(0);

@@ -9,8 +9,7 @@ import {links} from "../../../stuff/links";
 @Injectable()
 export class MatterListService {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   getMatters(): Observable<any[]> {
     return this.http.get('https://dashablog-55ba7.firebaseio.com/matters.json')

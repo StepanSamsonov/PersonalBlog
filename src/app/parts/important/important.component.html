@@ -8,20 +8,18 @@
   <div id="dir-shower" class="list-group-item list-group-item-light">
     <div>
       <div class="list-group" *ngFor="let catalog of (availabel_catalogs)">
-        <div class="line-elem-container">
-          <div class="list-group-item list-group-item-action" (click)="changeDir(catalog.name)">
+        <div class="list-group-item line-elem-container">
+          <div (click)="changeDir(catalog.name)">
             <div class="catalog-name">{{catalog.name}}</div>
           </div>
-          <button type="button" class="btn btn-outline-danger"
+          <button type="button" class="btn-sm btn-outline-danger"
                   (click)="delDir(catalog.id, catalog.name)">&times;</button>
         </div>
       </div>
       <div class="list-group" *ngFor="let file of (availabel_files)">
-        <div class="line-elem-container">
-          <div class="list-group-item list-group-item-action list-group-item-info" (click)="openFile(file.id)">
-            <div class="catalog-name">{{file.name}}</div>
-          </div>
-          <button type="button" class="btn btn-outline-danger"
+        <div class="list-group-item list-group-item-primary line-elem-container" (click)="openFile(file.id)">
+          <div class="catalog-name">{{file.name}}</div>
+          <button type="button" class="btn-sm btn-outline-danger"
                   (click)="delFile(file.id)">&times;</button>
         </div>
       </div>
@@ -40,7 +38,7 @@
     <button class="btn btn-primary spec-butt" (click)="showcloseForm()" id="add-button">
       {{show_create_form ? 'Скрыть' : 'Создать'}}
     </button>
-    <button id="change-file-button" class="btn btn-primary spec-butt" (click)="changeFile(content_id)">
+    <button id="change-file-button" [disabled]="change_butt_dis" class="btn btn-primary spec-butt" (click)="changeFile(content_id)">
       {{show_change_content_form ? 'Отмена' : 'Изменить'}}
     </button>
   </div>

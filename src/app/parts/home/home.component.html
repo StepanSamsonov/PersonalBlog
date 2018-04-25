@@ -1,5 +1,5 @@
 <div *ngIf="isLoggedIn()">
-  <div class="row" id="cnv-container">
+  <div id="cnv-container">
     <div style="display: block;">
       <canvas id="chart-cnv" baseChart width="600" height="200"
               [datasets]="lineChartData"
@@ -43,6 +43,10 @@
           <button type="submit" id="change-time-btn" class="btn btn-success" (click)="changeTime()">Изменить</button>
         </div>
       </div>
+    </div>
+
+    <div *ngIf="show_mess" class="alert alert-success" id="message-cont">
+      Успех!
     </div>
 
     <div id="change-email-form-cont" class="alert alert-light">

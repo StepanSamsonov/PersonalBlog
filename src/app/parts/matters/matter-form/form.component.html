@@ -1,4 +1,4 @@
-<div *ngIf="isLoggedIn()">
+<div *ngIf="isLoggedIn()" id="main-matter-form-cont">
   <button class="btn btn-primary" id="add-button" (click)="toggleShow()">{{show ? 'Скрыть' : 'Добавить'}}</button>
 
   <div *ngIf="show">

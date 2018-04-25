@@ -25,6 +25,12 @@ export class AuthService {
     );
   }
 
+  signInWithGoogle() {
+    return this._firebaseAuth.auth.signInWithPopup(
+      new firebase.auth.GoogleAuthProvider()
+    )
+  }
+
 
   signInRegular(email, password) {
     const credential = firebase.auth.EmailAuthProvider.credential( email, password );

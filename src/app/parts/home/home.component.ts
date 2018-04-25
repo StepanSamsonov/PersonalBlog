@@ -18,6 +18,8 @@ export class HomeComponent implements OnInit {
   main_email: string;
   push: string;
   chart_data: number[] = [];
+  show_mess: boolean = false;
+
   constructor(private fb: FormBuilder,
               private db: AngularFireDatabase,
               private vs: VisitsComponent,
@@ -51,6 +53,11 @@ export class HomeComponent implements OnInit {
     return this.AuthService.isLoggedIn();
   }
 
+  showMess() {
+    this.show_mess = true;
+    setTimeout(() => {this.show_mess = false}, 2000);
+  }
+
   createTimeForm() {
     this.change_time_form = this.fb.group({
       time: ['', Validators.required]
@@ -64,6 +71,7 @@ export class HomeComponent implements OnInit {
     }
     this.time = time;
     this.createTimeForm();
+    this.showMess();
   }
 
   createEmailForm() {
@@ -79,6 +87,7 @@ export class HomeComponent implements OnInit {
     }
     this.main_email = email;
     this.createEmailForm();
+    this.showMess();
   }
 
   changePush() {
@@ -90,6 +99,7 @@ export class HomeComponent implements OnInit {
         this.db.object('const').update({push: this.push});
       }
     }
+    this.showMess();
   }
 
   public lineChartData:Array<any> = [

@@ -12,8 +12,7 @@ main {
 #list-elem {
   margin: auto;
   width: 60%;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 10px;
   border-width: 10px;
 }
 #add-button {
@@ -38,4 +37,7 @@ main {
 #matter-icon {
   width: 150px;
   height: 150px;
+}
+#vacuum {
+  height: 10px;
 }

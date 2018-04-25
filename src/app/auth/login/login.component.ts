@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
       .then((res) => {
         this.email = res.additionalUserInfo.profile.email;
         let sub = this.db.object('const').valueChanges().subscribe(data => {
-          if ((data as any).email === this.email) {
+          if ((data as any).email.toLowerCase() === this.email) {
             this.router.navigate(['home']);
           } else {
             this.authService.logout();

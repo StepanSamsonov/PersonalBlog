@@ -4,6 +4,8 @@ import {AngularFirestore} from "angularfire2/firestore";
 import { AngularFireDatabase } from 'angularfire2/database';
 import {links} from "../../../stuff/links";
 import {MatterPostComponent} from '../matter-post/matter-post.component'
+import {AuthService} from '../../../auth/services/auth.service';
+
 
 @Component({
   selector: 'app-matter-form',
@@ -17,9 +19,15 @@ export class FormComponent {
   selectBox: string;
   @Output() refreshForm = new EventEmitter();
 
-  constructor(private fb: FormBuilder, private db: AngularFireDatabase) {
+  constructor(private fb: FormBuilder,
+              private db: AngularFireDatabase,
+              private AuthService: AuthService) {
     this.selectBox = "Green";
     this.createForm();
+  }
+
+  isLoggedIn() {
+    return this.AuthService.isLoggedIn();
   }
 
   createForm() {

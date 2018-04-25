@@ -15,10 +15,11 @@ import {HomeModule} from "./parts/home/home.module";
 import {ThinkingsPostModule} from "./parts/thinkings/thinkings-post/thinkings-post.module";
 import {NotificationsModule} from "./notifications/notifications.module";
 import {ImportantModule} from './parts/important/important.module';
-// import { LoginComponent } from './auth/login/login.component';
-// import {LoginModule} from "./auth/login/login.module";
-import {GoogleChart} from "../../node_modules/angular2-google-chart/directives/angular2-google-chart.directive";
 import {VisitsModule} from "./visits/visits.module";
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import {FormsModule} from "@angular/forms";
+import {AuthModule} from "./auth/auth.module";
+
 
 registerLocaleData(localeRu);
 
@@ -33,14 +34,15 @@ registerLocaleData(localeRu);
     MatterFormModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
+    AngularFireAuthModule,
     AppRoutingModule,
     HomeModule,
     ThinkingsPostModule,
     ImportantModule,
     NotificationsModule,
-    VisitsModule
-    //GoogleChart
-    //LoginModule
+    VisitsModule,
+    FormsModule,
+    AuthModule,
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'ru'},

@@ -36,6 +36,19 @@ main {
   justify-content: right;
 }
 #enter-butt {
-  color: white;
+  color: #007BFF;
   text-decoration: none;
+}
+.enter-butt {
+  width: 150px;
+}
+#nav-cont {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+main nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

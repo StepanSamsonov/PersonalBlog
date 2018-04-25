@@ -5,6 +5,8 @@ import {ImportantService} from './important.service';
 import {AngularFireDatabase} from "angularfire2/database";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {VisitsComponent} from '../../visits/visits.component';
+import {AuthService} from '../../auth/services/auth.service';
+
 
 @Component({
   selector: 'app-important',
@@ -32,13 +34,18 @@ export class ImportantComponent implements OnInit {
   constructor(private ImportantService: ImportantService,
               private db: AngularFireDatabase,
               private fb: FormBuilder,
-              private vs: VisitsComponent) { }
+              private vs: VisitsComponent,
+              private AuthService: AuthService) { }
 
   ngOnInit() {
     this.vs.updateVisitData();
     this.setChangeFileButton(true);
     this.getDir();
     this.createDirForm();
+  }
+
+  isLoggedIn() {
+    return this.AuthService.isLoggedIn();
   }
 
   createFile() {

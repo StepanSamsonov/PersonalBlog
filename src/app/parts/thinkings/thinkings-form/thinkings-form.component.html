@@ -1,18 +1,20 @@
-<button class="btn btn-primary" id="form-butt" (click)="toggleShow()">{{show ? 'Скрыть' : 'Добавить'}}</button>
-<div *ngIf="show">
+<div *ngIf="isLoggedIn()">
+  <button class="btn btn-primary" id="form-butt" (click)="toggleShow()">{{show ? 'Скрыть' : 'Добавить'}}</button>
+  <div *ngIf="show">
 
-  <form class="form-horizontal" id="main-form" [formGroup]="form">
-    <div class="form-group">
-      <label for="name">Заголовок</label>
-      <input type="text" id="name" class="form-control" placeholder="Enter title" formControlName="title">
-    </div>
-    <div class="form-group">
-      <label>Текст</label>
-      <textarea type="text" id="text" class="form-control" placeholder="Text" formControlName="text"></textarea>
-    </div>
-    <div class="form-group ">
-      <input type="submit" class="btn btn-success" value="Добавить"
-             id="sub-button" (click)="onSubmit()">
-    </div>
-  </form>
+    <form class="form-horizontal" id="main-form" [formGroup]="form">
+      <div class="form-group">
+        <label for="name">Заголовок</label>
+        <input type="text" id="name" class="form-control" placeholder="Enter title" formControlName="title">
+      </div>
+      <div class="form-group">
+        <label>Текст</label>
+        <textarea type="text" id="text" class="form-control" placeholder="Text" formControlName="text"></textarea>
+      </div>
+      <div class="form-group ">
+        <input type="submit" class="btn btn-success" value="Добавить"
+               id="sub-button" (click)="onSubmit()">
+      </div>
+    </form>
+  </div>
 </div>

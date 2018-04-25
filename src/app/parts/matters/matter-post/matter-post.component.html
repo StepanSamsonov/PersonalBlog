@@ -1,4 +1,4 @@
-<main>
+<div *ngIf="isLoggedIn()">
   <app-matter-form id="add-button" (refreshForm)="refreshForm()"></app-matter-form>
   <ul class="list-group">
     <li id="list-elem" *ngFor="let matter of (matters) | sortBy: ['diff']"
@@ -54,4 +54,5 @@
 
     </li>
   </ul>
-</main>
+</div>
+<div *ngIf="!isLoggedIn()">Loading...</div>

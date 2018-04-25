@@ -1,25 +1,33 @@
 <main>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/home">Главная</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <div *ngIf="isLoggedIn()" id="nav-cont">
+      <a class="navbar-brand" href="/home">Главная</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/matters">Дела<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/important">Нужное<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/blog">Мысли<span class="sr-only">(current)</span></a>
-        </li>
-      </ul>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/matters">Дела<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/important">Нужное<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/blog">Мысли<span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+      </div>
     </div>
+    <div *ngIf="!isLoggedIn()"></div>
     <div id="sign-in-container">
-      <button type="button" class="btn btn-lg btn-primary"><a id="enter-butt" href="/login">Вход</a></button>
+      <div *ngIf="!isLoggedIn()">
+        <a href="/login"><button type="button" class="btn btn-outline-primary enter-butt">Вход</button></a>
+      </div>
+      <div *ngIf="isLoggedIn()">
+        <button type="button" class="btn btn-outline-primary enter-butt" (click)="logout()">Выход</button>
+      </div>
     </div>
   </nav>
   <app-notification></app-notification>
@@ -29,7 +37,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <div id="social">
     <a target="_blank" href="https://vk.com/id308270119" class="fa fa-vk"></a>
-    <a href="#" class="fa fa-instagram"></a>
-    <a href="#" class="fa fa-google"></a>
+    <a target="_blank" href="https://www.instagram.com/dariadyomkina" class="fa fa-instagram"></a>
+    <a target="_blank" href="mailto:daria.dyomkina@gmail.com" class="fa fa-google"></a>
   </div>
 </footer>

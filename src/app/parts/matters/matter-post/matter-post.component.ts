@@ -8,6 +8,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {links} from '../../../stuff/links';
 import {FormComponent} from '../matter-form/form.component';
 import {VisitsComponent} from '../../../visits/visits.component';
+import {AuthService} from '../../../auth/services/auth.service';
+
 
 @Component({
   selector: 'app-matter-post',
@@ -23,7 +25,8 @@ export class MatterPostComponent implements OnInit {
   constructor(private db: AngularFireDatabase,
               private MatterListService: MatterListService,
               private fb: FormBuilder,
-              private vs: VisitsComponent) {
+              private vs: VisitsComponent,
+              private AuthService: AuthService) {
     this.selectBox = "Green";
     this.createLocForm();
   }
@@ -31,6 +34,10 @@ export class MatterPostComponent implements OnInit {
   ngOnInit() {
     this.vs.updateVisitData();
     this.updateMatterList();
+  }
+
+  isLoggedIn() {
+    return this.AuthService.isLoggedIn();
   }
 
   refreshForm() {

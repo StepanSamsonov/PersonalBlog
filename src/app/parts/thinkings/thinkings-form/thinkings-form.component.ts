@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {AngularFirestore} from "angularfire2/firestore";
 import { AngularFireDatabase } from 'angularfire2/database';
+import {AuthService} from '../../../auth/services/auth.service';
 
 
 @Component({
@@ -15,8 +16,14 @@ export class ThinkingsFormComponent {
   show = false;
   @Output() refreshform = new EventEmitter();
 
-  constructor(private fb: FormBuilder, private db: AngularFireDatabase) {
+  constructor(private fb: FormBuilder,
+              private db: AngularFireDatabase,
+              private AuthService: AuthService) {
     this.createForm();
+  }
+
+  isLoggedIn() {
+    return this.AuthService.isLoggedIn();
   }
 
   createForm() {

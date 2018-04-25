@@ -1,0 +1,13 @@
+#main-cont {
+  margin-top: 10px;
+}
+#vacuum {
+  height: 10px;
+}
+#main-form {
+  margin:auto;
+  width: 30%;
+  background-color: white;
+  border: 5px solid white;
+  border-radius: 5px;
+}

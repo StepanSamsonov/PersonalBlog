@@ -7,13 +7,13 @@
         <p>&emsp;{{p}}</p>
       </div>
       <p id="post-date">{{post.date}}</p>
-      <div>
+      <div *ngIf="isLoggedIn()">
         <button class="btn btn-primary" id="chengebutt" (click)="opencloseLocForm(post.id)">
           {{post.show ? 'Скрыть' : 'Изменить'}}</button>
         <button class="btn btn-danger" id="delbutt" (click)="deletePost(post.id)">Удалить</button>
       </div>
 
-      <div *ngIf="post.show">
+      <div *ngIf="post.show && isLoggedIn()">
         <form class="form-horizontal" id="main-form" [formGroup]="loc_form">
           <div class="form-group">
             <label for="change-title">Заголовок</label>

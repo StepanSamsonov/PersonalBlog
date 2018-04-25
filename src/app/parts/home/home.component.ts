@@ -2,6 +2,8 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AngularFireDatabase} from "angularfire2/database";
 import {VisitsComponent} from '../../visits/visits.component';
+import {AuthService} from '../../auth/services/auth.service';
+
 
 @Component({
   selector: 'app-home',
@@ -18,7 +20,8 @@ export class HomeComponent implements OnInit {
   chart_data: number[] = [];
   constructor(private fb: FormBuilder,
               private db: AngularFireDatabase,
-              private vs: VisitsComponent) { }
+              private vs: VisitsComponent,
+              private AuthService: AuthService) { }
 
   ngOnInit() {
     this.vs.updateVisitData();
@@ -42,6 +45,10 @@ export class HomeComponent implements OnInit {
         }
       }
     })
+  }
+
+  isLoggedIn() {
+    return this.AuthService.isLoggedIn();
   }
 
   createTimeForm() {

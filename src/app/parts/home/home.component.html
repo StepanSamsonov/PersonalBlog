@@ -1,59 +1,61 @@
-<div class="row" id="cnv-container">
-  <div style="display: block;">
-    <canvas id="chart-cnv" baseChart width="600" height="200"
-            [datasets]="lineChartData"
-            [labels]="lineChartLabels"
-            [options]="lineChartOptions"
-            [colors]="lineChartColors"
-            [legend]="lineChartLegend"
-            [chartType]="lineChartType"
-            (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"></canvas>
-  </div>
-</div>
-
-<div id="main-cont">
-  <div id="notific-content" class="alert alert-light">
-    <div id="notific-title">
-      <h3>Уведомления</h3>
+<div *ngIf="isLoggedIn()">
+  <div class="row" id="cnv-container">
+    <div style="display: block;">
+      <canvas id="chart-cnv" baseChart width="600" height="200"
+              [datasets]="lineChartData"
+              [labels]="lineChartLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
     </div>
-    <div id="get-not-container">
-      <div id="rec-not-cont">
-        <h4>Включить/выключить</h4>
-        <div class="btn-group btn-group-toggle" data-toggle="buttons" id="on-off-cont">
-          <label class="btn btn-secondary active">
-            <input type="radio" name="push_nots" id="option1" autocomplete="off" value="true"> On
-          </label>
-          <label class="btn btn-secondary">
-            <input type="radio" name="push_nots" id="option2" autocomplete="off" value="false"> Off
-          </label>
-        </div>
-        <button type="button" class="btn btn-success" (click)="changePush()">Изменить</button>
-      </div>
+  </div>
 
-      <div id="set-time-not-cont">
-        <h4>Изменить время</h4>
-        <form class="form-horizontal" [formGroup]="change_time_form">
-          <div class="form-group">
-            <input type="time" class="form-control"
-                   value="{{time}}" formControlName="time">
+  <div id="main-cont">
+    <div id="notific-content" class="alert alert-light">
+      <div id="notific-title">
+        <h3>Уведомления</h3>
+      </div>
+      <div id="get-not-container">
+        <div id="rec-not-cont">
+          <h4>Включить/выключить</h4>
+          <div class="btn-group btn-group-toggle" data-toggle="buttons" id="on-off-cont">
+            <label class="btn btn-secondary active">
+              <input type="radio" name="push_nots" id="option1" autocomplete="off" value="true"> On
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" name="push_nots" id="option2" autocomplete="off" value="false"> Off
+            </label>
           </div>
-        </form>
-        <button type="submit" id="change-time-btn" class="btn btn-success" (click)="changeTime()">Изменить</button>
+          <button type="button" class="btn btn-success" (click)="changePush()">Изменить</button>
+        </div>
+
+        <div id="set-time-not-cont">
+          <h4>Изменить время</h4>
+          <form class="form-horizontal" [formGroup]="change_time_form">
+            <div class="form-group">
+              <input type="time" class="form-control"
+                     value="{{time}}" formControlName="time">
+            </div>
+          </form>
+          <button type="submit" id="change-time-btn" class="btn btn-success" (click)="changeTime()">Изменить</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div id="change-email-form-cont" class="alert alert-light">
-    <h2>Сменить почту</h2>
-    <form class="form-horizontal" [formGroup]="change_email_form">
-      <div class="form-group">
-        <input type="email" class="form-control" placeholder="Email"
-               value="{{main_email}}" formControlName="email">
-      </div>
-      <button type="submit" class="btn btn-success" (click)="changeEmail()">Изменить</button>
-    </form>
+    <div id="change-email-form-cont" class="alert alert-light">
+      <h2>Сменить почту</h2>
+      <form class="form-horizontal" [formGroup]="change_email_form">
+        <div class="form-group">
+          <input type="email" class="form-control" placeholder="Email"
+                 value="{{main_email}}" formControlName="email">
+        </div>
+        <button type="submit" class="btn btn-success" (click)="changeEmail()">Изменить</button>
+      </form>
+    </div>
   </div>
+  <div id="vacuum"></div>
 </div>
-<div id="vacuum">
-</div>
+<div *ngIf="!isLoggedIn()">Loading...</div>

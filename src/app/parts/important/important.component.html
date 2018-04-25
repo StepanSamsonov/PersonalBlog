@@ -1,4 +1,4 @@
-<div id="main-container">
+<div id="main-container" *ngIf="isLoggedIn()">
   <div id="way-container" class="alert alert-dark">
     <div *ngFor="let part of (getWay())">
       <div id="way-part"><a (click)="returnDir(part)">{{part}}</a>&nbsp;/&nbsp;</div>
@@ -93,3 +93,4 @@
     </div>
   </div>
 </div>
+<div *ngIf="!isLoggedIn()">Loading...</div>

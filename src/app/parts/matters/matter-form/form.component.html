@@ -1,32 +1,34 @@
-<button class="btn btn-primary" id="add-button" (click)="toggleShow()">{{show ? 'Скрыть' : 'Добавить'}}</button>
+<div *ngIf="isLoggedIn()">
+  <button class="btn btn-primary" id="add-button" (click)="toggleShow()">{{show ? 'Скрыть' : 'Добавить'}}</button>
 
-<div *ngIf="show">
+  <div *ngIf="show">
 
-  <form class="form-horizontal" id="main-form" [formGroup]="form">
-    <div class="form-group">
-      <label for="name">Название</label>
-      <input type="text" id="name" class="form-control" placeholder="Enter name" formControlName="name">
-    </div>
-    <div class="form-group">
-      <label>Описание</label>
-      <textarea type="text" id="description" class="form-control" placeholder="Description"
-                formControlName="description"></textarea>
-    </div>
-    <div class="form-group">
-      <label for="timeover">Дедлайн</label>
-      <input type="date" id="timeover" class="form-control" formControlName="timeover">
-    </div>
-    <div class="form-group">
-      <label for="priority">Приоритет</label>
-      <select class="form-control" id="priority" formControlName="priority" [(ngModel)]='selectBox'>
-        <option id="green-sel" selected="selected" value="Green">Green</option>
-        <option id="yellow-sel">Yellow</option>
-        <option id="red-sel">Red</option>
-      </select>
-    </div>
-    <div class="form-group ">
-      <input type="submit" class="btn btn-success" id="sub-button" value="Добавить"
-             (click)="onSubmit()">
-    </div>
-  </form>
+    <form class="form-horizontal" id="main-form" [formGroup]="form">
+      <div class="form-group">
+        <label for="name">Название</label>
+        <input type="text" id="name" class="form-control" placeholder="Enter name" formControlName="name">
+      </div>
+      <div class="form-group">
+        <label>Описание</label>
+        <textarea type="text" id="description" class="form-control" placeholder="Description"
+                  formControlName="description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="timeover">Дедлайн</label>
+        <input type="date" id="timeover" class="form-control" formControlName="timeover">
+      </div>
+      <div class="form-group">
+        <label for="priority">Приоритет</label>
+        <select class="form-control" id="priority" formControlName="priority" [(ngModel)]='selectBox'>
+          <option id="green-sel" selected="selected" value="Green">Green</option>
+          <option id="yellow-sel">Yellow</option>
+          <option id="red-sel">Red</option>
+        </select>
+      </div>
+      <div class="form-group ">
+        <input type="submit" class="btn btn-success" id="sub-button" value="Добавить"
+               (click)="onSubmit()">
+      </div>
+    </form>
+  </div>
 </div>

@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
         let sub = this.db.object('const').valueChanges().subscribe(data => {
           if ((data as any).email.toLowerCase() === this.email) {
             this.router.navigate(['home']);
+            sub.unsubscribe();
           } else {
             this.authService.logout();
             alert('Вход только для владельцев сайта.');

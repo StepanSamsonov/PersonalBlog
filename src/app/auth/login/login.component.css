@@ -10,4 +10,23 @@
   background-color: white;
   border: 5px solid white;
   border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#text-login {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+#login-butt {
+  margin-bottom: 20px;
+}
+#main-form h3 {
+  width: 90%;
+  text-decoration-line: underline;
+  text-align: center;
 }

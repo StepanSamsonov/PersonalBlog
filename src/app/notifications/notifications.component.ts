@@ -46,7 +46,7 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
 
   private instances: Notification[] = [];
   matters: any[];
-  remind_period: number = 20;
+  remind_period: number = 5;
   hours_to_remind: number = 12;
   minutes_to_remid: number = 0;
   time_notif: number = 2000;

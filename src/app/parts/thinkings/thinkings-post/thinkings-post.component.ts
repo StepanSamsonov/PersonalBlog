@@ -31,7 +31,8 @@ export class ThinkingsPostComponent implements OnInit {
     this.vs.updateVisitData();
     this.ThinkingsListService.getThinkings().subscribe(data => {
       this.thinkings = data.slice(0, Math.min(this.posts_per_pages, data.length));
-      this.pages_count = Math.floor(data.length/this.posts_per_pages)+1;
+      this.pages_count = Math.ceil(data.length/this.posts_per_pages);
+      console.log(this.pages_count);
     });
   }
 
@@ -42,7 +43,7 @@ export class ThinkingsPostComponent implements OnInit {
   refreshForm() {
     this.ThinkingsListService.getThinkings().subscribe(data => {
       this.thinkings = data.slice(0, Math.min(this.posts_per_pages, data.length));
-      this.pages_count = Math.floor(data.length/this.posts_per_pages)+1;
+      this.pages_count = Math.ceil(data.length/this.posts_per_pages);
     });
   }
 
@@ -51,6 +52,7 @@ export class ThinkingsPostComponent implements OnInit {
     this.ThinkingsListService.getThinkings().subscribe(data => {
       this.thinkings = data.slice(this.current_page*this.posts_per_pages,
         Math.min((this.current_page+1)*this.posts_per_pages, data.length));
+      this.pages_count = Math.ceil(data.length/this.posts_per_pages);
     });
   }
 

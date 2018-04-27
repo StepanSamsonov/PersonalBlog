@@ -29,7 +29,7 @@ export class VisitsComponent {
   }
 
   updateVisitData() {
-    this.db.object('const').valueChanges().subscribe(data => {
+    let sub = this.db.object('const').valueChanges().subscribe(data => {
       const last_date = new Date((data as any).last_date);
       let last_date_form = this.get_form_date(last_date);
       const last_seconds = last_date.getTime() / 1000;
@@ -49,6 +49,7 @@ export class VisitsComponent {
         visit_data[0] += 1;
       }
       this.db.object('const').update({last_date: now_date.toString(), chart_data: visit_data.reverse().join(' ')});
+      sub.unsubscribe();
     });
   }
 }

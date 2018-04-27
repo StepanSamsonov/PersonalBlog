@@ -171,7 +171,7 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
               } else {
                 days = ' дней';
               }
-              if (diff < this.remind_period && diff != 0) {
+              if (diff < this.remind_period && diff > 0) {
                 const closeDelay = this.time_notif;
                 const title = "Внимание!";
                 const body = name + "\nОсталось: " + diff + days;

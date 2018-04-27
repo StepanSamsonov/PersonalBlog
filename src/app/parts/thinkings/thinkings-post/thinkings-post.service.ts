@@ -22,9 +22,17 @@ export class ThinkingsListService {
         return Object.entries(data)
           .reverse()
           .map(function ([id, value]) {
-            const ptext = value.text.split('\n');
+            let text = value.text;
+            if (!text) {
+              text = '';
+            }
+            let title = value.title;
+            if (!title) {
+              title = '';
+            }
+            const ptext = text.split('\n');
             const show = false;
-            return Object.assign(value, {id, ptext, show});
+            return Object.assign(value, {id, ptext, show, text, title});
           })
       });
   };

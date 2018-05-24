@@ -8,12 +8,12 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AngularFireDatabase} from "angularfire2/database";
 
 @Injectable()
-export class ThinkingsListService {
+export class ThoughtsListService {
 
   constructor(private http: HttpClient) {
   }
 
-  getThinkings(): Observable<any[]> {
+  getThoughts(): Observable<any[]> {
     return this.http.get('https://dashablog-55ba7.firebaseio.com/blog.json')
       .map((data) => {
         if (!data) {

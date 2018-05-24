@@ -7,8 +7,8 @@ import {AuthService} from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-thinkings-form',
-  templateUrl: './thinkings-form.component.html',
-  styleUrls: ['./thinkings-form.component.css']
+  templateUrl: './thoughts-form.component.html',
+  styleUrls: ['./thoughts-form.component.css']
 })
 export class ThinkingsFormComponent {
 

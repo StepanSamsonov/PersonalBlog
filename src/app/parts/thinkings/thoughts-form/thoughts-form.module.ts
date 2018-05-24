@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ThinkingsFormComponent } from './thinkings-form.component';
+import { ThinkingsFormComponent } from './thoughts-form.component';
 import {environment} from "../../../../environments/environment";
 import {AngularFireModule} from "angularfire2";
 import {ReactiveFormsModule} from "@angular/forms";

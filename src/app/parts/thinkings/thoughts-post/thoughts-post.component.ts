@@ -1,18 +1,18 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AngularFireDatabase} from "angularfire2/database";
 import {Subject} from "rxjs/Subject";
-import {ThinkingsListService} from "./thinkings-post.service"
+import {ThoughtsListService} from "./thinkings-post.service"
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {VisitsComponent} from '../../../visits/visits.component';
 import {AuthService} from '../../../auth/services/auth.service';
 
 
 @Component({
-  selector: 'app-thinkings-post',
-  templateUrl: './thinkings-post.component.html',
-  styleUrls: ['./thinkings-post.component.css']
+  selector: 'app-thoughts-post',
+  templateUrl: './thoughts-post.component.html',
+  styleUrls: ['./thoughts-post.component.css']
 })
-export class ThinkingsPostComponent implements OnInit {
+export class ThoughtsPostComponent implements OnInit {
 
   thinkings: any[];
   pages_count: any;
@@ -21,7 +21,7 @@ export class ThinkingsPostComponent implements OnInit {
   loc_form: FormGroup;
 
   constructor(private db: AngularFireDatabase,
-              private ThinkingsListService: ThinkingsListService,
+              private ThoughtsListService: ThoughtsListService,
               private fb: FormBuilder,
               private vs: VisitsComponent,
               private AuthService: AuthService) { }
@@ -29,7 +29,7 @@ export class ThinkingsPostComponent implements OnInit {
   ngOnInit() {
     this.createLocForm();
     this.vs.updateVisitData();
-    this.ThinkingsListService.getThinkings().subscribe(data => {
+    this.ThoughtsListService.getThoughts().subscribe(data => {
       this.thinkings = data.slice(0, Math.min(this.posts_per_pages, data.length));
       this.pages_count = Math.ceil(data.length/this.posts_per_pages);
       console.log(this.pages_count);
@@ -41,7 +41,7 @@ export class ThinkingsPostComponent implements OnInit {
   }
 
   refreshForm() {
-    this.ThinkingsListService.getThinkings().subscribe(data => {
+    this.ThoughtsListService.getThoughts().subscribe(data => {
       this.thinkings = data.slice(0, Math.min(this.posts_per_pages, data.length));
       this.pages_count = Math.ceil(data.length/this.posts_per_pages);
     });
@@ -49,7 +49,7 @@ export class ThinkingsPostComponent implements OnInit {
 
   deletePost(itemKey) {
     this.db.object('blog/' + itemKey ).remove();
-    this.ThinkingsListService.getThinkings().subscribe(data => {
+    this.ThoughtsListService.getThoughts().subscribe(data => {
       this.thinkings = data.slice(this.current_page*this.posts_per_pages,
         Math.min((this.current_page+1)*this.posts_per_pages, data.length));
       this.pages_count = Math.ceil(data.length/this.posts_per_pages);
@@ -88,7 +88,7 @@ export class ThinkingsPostComponent implements OnInit {
     if (text != '') {
       this.db.object('blog/' + id).update({text: text});
     }
-    this.ThinkingsListService.getThinkings().subscribe(data => {
+    this.ThoughtsListService.getThoughts().subscribe(data => {
       this.thinkings = data.slice(this.current_page*this.posts_per_pages,
         Math.min((this.current_page+1)*this.posts_per_pages, data.length));
     });
@@ -97,7 +97,7 @@ export class ThinkingsPostComponent implements OnInit {
 
   changePage(numb) {
     this.current_page = numb;
-    this.ThinkingsListService.getThinkings().subscribe(data => {
+    this.ThoughtsListService.getThoughts().subscribe(data => {
       this.thinkings = data.slice(this.current_page*this.posts_per_pages,
         Math.min((this.current_page+1)*this.posts_per_pages, data.length));
     });

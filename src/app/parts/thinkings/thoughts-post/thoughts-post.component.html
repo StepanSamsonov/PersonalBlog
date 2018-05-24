@@ -1,9 +1,9 @@
 <main>
-  <app-thinkings-form id="add-butt" (refreshform)="refreshForm()"></app-thinkings-form>
+  <app-thoughts-form id="add-butt" (refreshform)="refreshForm()"></app-thoughts-form>
   <ul class="list-group">
-    <li id="list-elem" *ngFor="let post of (thinkings)" class="list-group-item list-group-item-light">
+    <li id="list-elem" *ngFor="let post of thinkings" class="list-group-item list-group-item-light">
       <h2>{{post.title}}</h2>
-      <div id="post-text" *ngFor="let p of (post.ptext)">
+      <div id="post-text" *ngFor="let p of post.ptext">
         <p>&emsp;{{p}}</p>
       </div>
       <p id="post-date">{{post.date}}</p>

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ThinkingsFormModule} from "../thinkings-form/thinkings-form.module";
+import {ThoughtsFormModule} from "../thoughts-form/thoughts-form.module";
 import {AngularFireDatabase} from "angularfire2/database";
-import {ThinkingsPostComponent} from "./thinkings-post.component"
-import {ThinkingsListService} from "./thinkings-post.service";
+import {ThoughtsPostComponent} from "./thinkings-post.component"
+import {ThoughtsListService} from "./thinkings-post.service";
 import {ReactiveFormsModule} from "@angular/forms";
 import {environment} from "../../../../environments/environment";
 import {AngularFireModule} from "angularfire2";
@@ -11,12 +11,12 @@ import {AngularFireModule} from "angularfire2";
 @NgModule({
   imports: [
     CommonModule,
-    ThinkingsFormModule,
+    ThoughtsFormModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase)
   ],
-  declarations: [ThinkingsPostComponent],
-  exports: [ThinkingsPostComponent],
-  providers: [AngularFireDatabase, ThinkingsListService],
+  declarations: [ThoughtsPostComponent],
+  exports: [ThoughtsPostComponent],
+  providers: [AngularFireDatabase, ThoughtsListService],
 })
-export class ThinkingsPostModule { }
+export class ThoughtsPostModule { }

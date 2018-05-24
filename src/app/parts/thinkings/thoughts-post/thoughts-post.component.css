@@ -3,6 +3,9 @@ main {
   flex-direction: column;
   justify-content: center;
 }
+main ul {
+  margin-bottom: 10px;
+}
 #post-text {
   word-wrap: break-word;
 }

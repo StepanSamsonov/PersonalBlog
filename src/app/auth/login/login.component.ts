@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { AngularFireDatabase } from "angularfire2/database";
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { AuthService } from '../services/auth.service';
-import {AngularFireDatabase} from "angularfire2/database";
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
-
+export class LoginComponent {
 
   email: string;
 
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService,
               private router: Router,
               private db: AngularFireDatabase) { }
+
 
   signInWithGoogle() {
     this.authService.signInWithGoogle()
@@ -40,18 +42,12 @@ export class LoginComponent implements OnInit {
       .catch((err) => console.log(err));
   }
 
-  signInWithEmail() {
 
+  signInWithEmail() {
     this.authService.signInRegular(this.user.email, this.user.password)
       .then((res) => {
         this.router.navigate(['home']);
       })
       .catch((err) => console.log('error: ' + err));
   }
-
-
-
-  ngOnInit() {
-  }
-
 }

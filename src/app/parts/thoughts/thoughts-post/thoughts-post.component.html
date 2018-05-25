@@ -1,14 +1,14 @@
 <main>
   <app-thoughts-form id="add-butt" (refreshform)="refreshForm()"></app-thoughts-form>
   <ul class="list-group">
-    <li id="list-elem" *ngFor="let post of thinkings" class="list-group-item list-group-item-light">
+    <li id="list-elem" *ngFor="let post of thoughts" class="list-group-item list-group-item-light">
       <h2>{{post.title}}</h2>
       <div id="post-text" *ngFor="let p of post.ptext">
         <p>&emsp;{{p}}</p>
       </div>
       <p id="post-date">{{post.date}}</p>
       <div *ngIf="isLoggedIn()">
-        <button class="btn btn-primary" id="chengebutt" (click)="opencloseLocForm(post.id)">
+        <button class="btn btn-primary" id="chengebutt" (click)="changeFormOpenness(post.id)">
           {{post.show ? 'Скрыть' : 'Изменить'}}</button>
         <button class="btn btn-danger" id="delbutt" (click)="deletePost(post.id)">Удалить</button>
       </div>

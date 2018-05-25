@@ -1,15 +1,19 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Rx';
-import {any} from "codelyzer/util/function";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Rx';
+import { links } from "../../../stuff/links";
+
+import {AngularFireDatabase} from "angularfire2/database";
+
 import 'rxjs/add/operator/catch';
-import {links} from "../../../stuff/links";
+import 'rxjs/add/operator/map';
+
 
 @Injectable()
 export class MatterListService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private db: AngularFireDatabase,
+              private http: HttpClient) { }
 
   getMatters(): Observable<any[]> {
     return this.http.get('https://dashablog-55ba7.firebaseio.com/matters.json')
@@ -20,7 +24,7 @@ export class MatterListService {
         return Object.entries(data)
           .map(function ([id, value]) {
             const time = new Date().getTime();
-            let diff = Math.ceil((new Date(value.timeover).getTime() - time)/(1000*60*60*24));
+            let diff = Math.ceil((new Date(value.deadline).getTime() - time)/(1000*60*60*24));
             let days = '';
             if (diff % 10 == 1) {
               days = ' день';
@@ -52,5 +56,52 @@ export class MatterListService {
             return Object.assign(value, {id, diff, days, priority, show, icon, description});
           })
       });
+  }
+
+  static changeFormOpenness(id, matters) {
+    for (let i=0; i<matters.length; ++i) {
+      if (matters[i].id == id) {
+        matters[i].show = !matters[i].show;
+        if (matters[i].show) {
+          for (let j=0; j<matters.length; ++j) {
+            if (i != j) {
+              matters[j].show = false;
+            }
+          }
+        }
+        break;
+      }
+    }
+  }
+
+  updatePostData(id, form_values) {
+    let {name, description, deadline, priority} = form_values;
+    if (name != '') {
+      this.db.object('matters/' + id).update({name: name});
+    }
+    if (description != '') {
+      this.db.object('matters/' + id).update({description: description});
+    }
+    if (deadline != '') {
+      this.db.object('matters/' + id).update({deadline: deadline});
+    }
+    if (priority != '') {
+      let icon = '';
+      if (priority === 'Red') {
+        priority = 'list-group-item list-group-item-danger';
+        icon = links.red_notification_icon;
+      } else if (priority === 'Yellow') {
+        priority = 'list-group-item list-group-item-warning';
+        icon = links.yellow_notification_icon;
+      } else if (priority === 'Green') {
+        priority = 'list-group-item list-group-item-success';
+        icon = links.green_notification_icon;
+      }
+      this.db.object('matters/' + id).update({priority: priority, icon: icon});
+    }
+  }
+
+  deleteForm(id) {
+    this.db.object('matters/' + id ).remove();
   }
 }

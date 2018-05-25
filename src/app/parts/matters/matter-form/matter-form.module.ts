@@ -1,18 +1,24 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormComponent } from './form.component';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import {environment} from "../../../../environments/environment";
-import {AngularFireModule} from "angularfire2";
+
+import { FormComponent } from './matter-form.component';
+import { MatterFormService } from "./matter-form.service";
 
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebase)
   ],
-  declarations: [FormComponent],
-  exports: [FormComponent]
+  declarations: [
+    FormComponent,
+  ],
+  exports: [
+    FormComponent,
+  ],
+  providers: [
+    MatterFormService,
+  ]
 })
 export class MatterFormModule { }

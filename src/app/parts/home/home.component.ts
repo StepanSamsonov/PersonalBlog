@@ -1,8 +1,9 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AngularFireDatabase} from "angularfire2/database";
-import {VisitsComponent} from '../../visits/visits.component';
-import {AuthService} from '../../auth/services/auth.service';
+import { AngularFireDatabase } from "angularfire2/database";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+
+import { AuthService } from '../../auth/services/auth.service';
+import { VisitsComponent } from '../../visits/visits.component';
 
 
 @Component({
@@ -20,10 +21,12 @@ export class HomeComponent implements OnInit {
   chart_data: number[] = [];
   show_mess: boolean = false;
 
+
   constructor(private fb: FormBuilder,
               private db: AngularFireDatabase,
               private vs: VisitsComponent,
               private AuthService: AuthService) { }
+
 
   ngOnInit() {
     this.vs.updateVisitData();
@@ -49,20 +52,24 @@ export class HomeComponent implements OnInit {
     })
   }
 
+
   isLoggedIn() {
     return this.AuthService.isLoggedIn();
   }
+
 
   showMess() {
     this.show_mess = true;
     setTimeout(() => {this.show_mess = false}, 2000);
   }
 
+
   createTimeForm() {
     this.change_time_form = this.fb.group({
       time: ['', Validators.required]
     });
   }
+
 
   changeTime() {
     let {time} = this.change_time_form.value;
@@ -74,11 +81,13 @@ export class HomeComponent implements OnInit {
     this.showMess();
   }
 
+
   createEmailForm() {
     this.change_email_form = this.fb.group({
       email: ['', Validators.required],
     });
   }
+
 
   changeEmail() {
     let {email} = this.change_email_form.value;
@@ -89,6 +98,7 @@ export class HomeComponent implements OnInit {
     this.createEmailForm();
     this.showMess();
   }
+
 
   changePush() {
     let radios = document.getElementsByName('push_nots');
@@ -101,6 +111,7 @@ export class HomeComponent implements OnInit {
     }
     this.showMess();
   }
+
 
   public lineChartData:Array<any> = [
     {data: this.chart_data, label: 'Посещаемость'},
@@ -122,7 +133,6 @@ export class HomeComponent implements OnInit {
   ];
   public lineChartLegend:boolean = true;
   public lineChartType:string = 'line';
-
   public chartClicked(e:any):void { }
   public chartHovered(e:any):void { }
 }

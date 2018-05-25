@@ -7,11 +7,10 @@ import {
   Input,
   Output
 } from '@angular/core';
+import {AngularFireDatabase} from "angularfire2/database";
+
 import { MatterListService } from '../parts/matters/matter-post/matter-post.service';
 import { links } from '../stuff/links';
-import {Observable} from "rxjs/Rx";
-import {AngularFireDatabase} from "angularfire2/database";
-import {HttpClient} from "@angular/common/http";
 
 
 declare var Notification;
@@ -44,6 +43,7 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
   @Output('error') public onError: EventEmitter<any> = new EventEmitter();
   @Output('action') public onClick: EventEmitter<any> = new EventEmitter();
 
+
   private instances: Notification[] = [];
   matters: any[];
   remind_period: number = 5;
@@ -56,17 +56,21 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private MatterListService: MatterListService,
               private db: AngularFireDatabase) { }
 
+
   public checkCompatibility () {
     return !!('Notification' in window);
   }
+
 
   public isPermissionGranted (permission) {
     return permission === 'granted';
   }
 
+
   public requestPermission (callback) {
     return Notification.requestPermission(callback);
   }
+
 
   public show () {
     if (!this.checkCompatibility()) {
@@ -80,11 +84,11 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+
   public create () {
     if (this.title === undefined) {
       return 0;
     }
-    //console.log(this.body);
     let notification = new Notification(this.title, {
       dir: this.dir,
       lang: this.lang,
@@ -107,6 +111,7 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
     return notification;
   }
 
+
   public close (notification): void {
     if (this.closeDelay) {
       setTimeout(() => {
@@ -117,10 +122,12 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+
   public closeAll (): void {
     this.instances.map(notification => this.close(notification));
     this.instances = [];
   }
+
 
   attachEventHandlers (notification): void {
     notification.onshow = () => {
@@ -139,6 +146,7 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
       this.onClose.emit({ notification });
     };
   }
+
 
   public ngOnInit (): void {
     this.onLoad.emit({});
@@ -214,11 +222,12 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
     }, 1000*this.second_period_to_update_time);
   }
 
+
   public ngOnDestroy (): void {
     this.closeAll();
-  }
+    }
+
 
   public ngOnChanges(): void {
   }
-
 }

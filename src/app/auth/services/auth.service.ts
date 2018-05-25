@@ -1,23 +1,23 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-
 import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
+import * as FireBase from 'firebase/app';
+
 
 @Injectable()
 export class AuthService {
-  private user: Observable<firebase.User>;
-  private userDetails: firebase.User = null;
 
-  constructor(private _firebaseAuth: AngularFireAuth, private router: Router) {
-    this.user = _firebaseAuth.authState;
+  private user: Observable<FireBase.User>;
+  private userDetails: FireBase.User = null;
 
+
+  constructor(private FireBaseAuth: AngularFireAuth, private router: Router) {
+    this.user = FireBaseAuth.authState;
     this.user.subscribe(
       (user) => {
         if (user) {
           this.userDetails = user;
-          //console.log(this.userDetails);
         } else {
           this.userDetails = null;
         }
@@ -25,22 +25,23 @@ export class AuthService {
     );
   }
 
+
   signInWithGoogle() {
-    return this._firebaseAuth.auth.signInWithPopup(
-      new firebase.auth.GoogleAuthProvider()
+    return this.FireBaseAuth.auth.signInWithPopup(
+      new FireBase.auth.GoogleAuthProvider()
     )
   }
 
 
   signInRegular(email, password) {
-    const credential = firebase.auth.EmailAuthProvider.credential( email, password );
+    const credential = FireBase.auth.EmailAuthProvider.credential(email, password);
 
-    return this._firebaseAuth.auth.signInWithEmailAndPassword(email, password)
+    return this.FireBaseAuth.auth.signInWithEmailAndPassword(email, password)
   }
 
 
   isLoggedIn() {
-    if (this.userDetails == null ) {
+    if (this.userDetails === null ) {
       return false;
     } else {
       return true;
@@ -49,7 +50,7 @@ export class AuthService {
 
 
   logout() {
-    this._firebaseAuth.auth.signOut()
+    this.FireBaseAuth.auth.signOut()
       .then((res) => this.router.navigate(['/']));
   }
 }

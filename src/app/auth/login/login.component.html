@@ -1,51 +1,18 @@
 <div class="main__body" id="main-cont">
   <div class="container">
+    <form name="userform" method="post" #formCtrl="ngForm" id="main-form">
+      <h3 align="center">Login</h3>
 
-    <!--<div class="login__page">-->
-      <!--<div class="row">-->
-        <!--<div class="card col-md-4 col-md-offset-4">-->
-          <!--<div class="login__card">-->
-            <!--<div class="card-block">-->
+      <div id="text-login">
+        <div>Вход только для владельцев сайта</div>
+        <div>Если вы не владелец, то это действие абсолютно бесполезно</div>
+      </div>
 
-              <form name="userform" method="post" #formCtrl="ngForm" id="main-form">
-                <h3 align="center">Login</h3>
-                <!--<div class="form-group">-->
-                  <!--<label>Email address</label>-->
-                  <!--<input type="email" class="form-control" [(ngModel)]="user.email" name="email"-->
-                         <!--placeholder="Email" required>-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                  <!--<label>Password</label>-->
-                  <!--<input type="password" class="form-control" [(ngModel)]="user.password"-->
-                         <!--name="password" placeholder="Password" required>-->
-                <!--</div>-->
-
-                <!--<div class="form-group">-->
-                  <!--<button type="buton" class="btn btn-primary btn-block"-->
-                          <!--style="margin-bottom: 20px" (click)="signInWithEmail()" [disabled]="formCtrl.form.invalid">-->
-                    <!--Login with Email-->
-                  <!--</button>-->
-                <!--</div>-->
-
-                <div id="text-login">
-                  <div>Вход только для владельцев сайта</div>
-                  <div>Если вы не владелец, то это действие абсолютно бесполезно</div>
-                </div>
-
-                <button type="button" class="btn btn-primary btn-block" (click)="signInWithGoogle()" id="login-butt">
-                  <i class="fa fa-google" aria-hidden="true"></i>
-                  Login with Google
-                </button>
-
-              </form>
-
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-
-      <!--</div>-->
-    <!--</div>-->
-
+      <button type="button" class="btn btn-primary btn-block" (click)="signInWithGoogle()" id="login-butt">
+        <i class="fa fa-google" aria-hidden="true"></i>
+        Login with Google
+      </button>
+    </form>
   </div>
 </div>
 <div id="vacuum"></div>

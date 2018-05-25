@@ -1,20 +1,21 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {AngularFirestore} from "angularfire2/firestore";
 import { AngularFireDatabase } from 'angularfire2/database';
-import {AuthService} from '../../../auth/services/auth.service';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { AuthService } from '../../../auth/services/auth.service';
 
 
 @Component({
-  selector: 'app-thinkings-form',
+  selector: 'app-thoughts-form',
   templateUrl: './thoughts-form.component.html',
   styleUrls: ['./thoughts-form.component.css']
 })
-export class ThinkingsFormComponent {
+export class ThoughtsFormComponent {
 
   form: FormGroup;
   show = false;
   @Output() refreshform = new EventEmitter();
+
 
   constructor(private fb: FormBuilder,
               private db: AngularFireDatabase,
@@ -22,9 +23,11 @@ export class ThinkingsFormComponent {
     this.createForm();
   }
 
+
   isLoggedIn() {
     return this.AuthService.isLoggedIn();
   }
+
 
   createForm() {
     this.form = this.fb.group({
@@ -33,9 +36,11 @@ export class ThinkingsFormComponent {
     });
   }
 
+
   toggleShow() {
     this.show = !this.show;
   }
+
 
   onSubmit() {
     this.show = false;

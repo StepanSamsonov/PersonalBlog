@@ -1,25 +1,23 @@
 import { AngularFireModule } from "angularfire2";
-import { ChartsModule } from 'ng2-charts';
 import { CommonModule } from '@angular/common';
-import { environment } from "../../../environments/environment";
+import { environment } from "../../../../environments/environment";
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from "@angular/forms";
 
-import { HomeComponent } from "./home.component";
+import { ThoughtsFormComponent } from './thoughts-form.component';
 
 
 @NgModule({
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
-    ChartsModule,
     CommonModule,
     ReactiveFormsModule,
   ],
   declarations: [
-    HomeComponent,
+    ThoughtsFormComponent,
   ],
   exports: [
-    HomeComponent,
-  ],
+    ThoughtsFormComponent,
+  ]
 })
-export class HomeModule { }
+export class ThoughtsFormModule { }

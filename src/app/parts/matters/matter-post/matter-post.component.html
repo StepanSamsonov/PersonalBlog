@@ -9,11 +9,11 @@
           <div *ngFor="let parag of matter.description">
             <p id="description-content">{{parag}}</p>
           </div>
-          <p>Дата окончания: {{matter.timeover}} | Осталось: {{matter.diff}} {{matter.days}} </p>
+          <p>Дата окончания: {{matter.deadline}} | Осталось: {{matter.diff}} {{matter.days}} </p>
           <div>
-            <button class="btn btn-primary" id="chengebutt" (click)="opencloseLocForm(matter.id)">
+            <button class="btn btn-primary" id="chengebutt" (click)="changeFormOpenness(matter.id)">
               {{matter.show ? 'Скрыть' : 'Изменить'}}</button>
-            <button class="btn btn-danger" id="delbutt" (click)="deleteObject(matter.id)">Удалить</button>
+            <button class="btn btn-danger" id="delbutt" (click)="deleteForm(matter.id)">Удалить</button>
           </div>
         </div>
         <div id="right-content">
@@ -34,8 +34,8 @@
                       formControlName="description" value="{{matter.description}}"></textarea>
           </div>
           <div class="form-group">
-            <label for="timeover">Дедлайн</label>
-            <input type="date" id="timeover" class="form-control" formControlName="timeover" value="{{matter.timeover}}">
+            <label for="deadline">Дедлайн</label>
+            <input type="date" id="deadline" class="form-control" formControlName="deadline" value="{{matter.deadline}}">
           </div>
           <div class="form-group">
             <label for="priority">Приоритет</label>
@@ -47,7 +47,7 @@
           </div>
           <div class="form-group ">
             <input type="submit" class="btn btn-success" id="change-button" value="Изменить"
-                   (click)="changePost(matter.id)">
+                   (click)="changePostData(matter.id)">
           </div>
         </form>
       </div>

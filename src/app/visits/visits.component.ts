@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {AngularFireDatabase} from "angularfire2/database";
+import { AngularFireDatabase } from "angularfire2/database";
+import { Component } from '@angular/core';
+
 import 'rxjs/add/operator/take';
+
 
 @Component({
   selector: 'app-visits',
@@ -10,7 +12,8 @@ export class VisitsComponent {
 
   constructor(private db: AngularFireDatabase) { }
 
-  get_form_date(date: Date): string {
+
+  static get_form_date(date: Date): string {
     let res = date.getFullYear() + '/';
     const month = date.getMonth() + 1;
     if (month < 10) {
@@ -28,13 +31,14 @@ export class VisitsComponent {
     return res;
   }
 
+
   updateVisitData() {
     let sub = this.db.object('const').valueChanges().subscribe(data => {
       const last_date = new Date((data as any).last_date);
-      let last_date_form = this.get_form_date(last_date);
+      let last_date_form = VisitsComponent.get_form_date(last_date);
       const last_seconds = last_date.getTime() / 1000;
       const now_date = new Date();
-      let now_date_form = this.get_form_date(now_date);
+      let now_date_form = VisitsComponent.get_form_date(now_date);
       const now_seconds = now_date.getTime() / 1000;
       let visit_data = (data as any).chart_data.split(' ').reverse().map(Number);
       if (now_date_form > last_date_form) {

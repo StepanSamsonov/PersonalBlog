@@ -1,11 +1,10 @@
+import { AngularFireDatabase } from "angularfire2/database";
 import { Component, OnInit } from '@angular/core';
-import {links} from "../../stuff/links";
-import {HttpClient} from "@angular/common/http";
-import {ImportantService} from './important.service';
-import {AngularFireDatabase} from "angularfire2/database";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {VisitsComponent} from '../../visits/visits.component';
-import {AuthService} from '../../auth/services/auth.service';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+
+import { AuthService } from '../../auth/services/auth.service';
+import { ImportantService } from './important.service';
+import { VisitsComponent } from '../../visits/visits.component';
 
 
 @Component({
@@ -32,11 +31,13 @@ export class ImportantComponent implements OnInit {
   content_sub: any;
   change_butt_dis: boolean = false;
 
+
   constructor(private ImportantService: ImportantService,
               private db: AngularFireDatabase,
               private fb: FormBuilder,
               private vs: VisitsComponent,
               private AuthService: AuthService) { }
+
 
   ngOnInit() {
     this.vs.updateVisitData();
@@ -45,9 +46,11 @@ export class ImportantComponent implements OnInit {
     this.createDirForm();
   }
 
+
   isLoggedIn() {
     return this.AuthService.isLoggedIn();
   }
+
 
   createFile() {
     let {name, type} = this.dir_form.value;
@@ -62,6 +65,7 @@ export class ImportantComponent implements OnInit {
     this.getDir();
   }
 
+
   createDirForm() {
     this.dir_form = this.fb.group({
       name: ['', Validators.required],
@@ -69,33 +73,35 @@ export class ImportantComponent implements OnInit {
     });
   }
 
+
   delDir(id, name) {
     this.db.object(this.current_dir + '/' + id).remove();
     this.db.object(this.current_dir + '/' + name).remove();
     this.getDir();
   }
 
+
   delFile(id) {
     if (id === this.content_id) {
       this.content_sub.unsubscribe();
-      // this.content = [];
-      // this.content_title = '';
-      // this.content_id = '';
     }
     this.db.object(this.current_dir + '/' + id).remove();
     this.getDir();
   }
+
 
   changeDir(new_path: string) {
     this.current_dir += '/' + new_path;
     this.getDir();
   }
 
+
   returnDir(name: string) {
     let way = this.getWay();
     this.current_dir = way.slice(0, way.indexOf(name)+1).join('/');
     this.getDir();
   }
+
 
   getDir() {
     const files = this.ImportantService.getCatalog(this.current_dir);
@@ -105,18 +111,21 @@ export class ImportantComponent implements OnInit {
     });
   }
 
+
   getWay() {
     return this.current_dir.split('/');
   }
+
 
   showcloseForm() {
     this.show_create_form = !this.show_create_form;
   }
 
+
   setChangeFileButton(value: boolean) {
-    // document.getElementById("change-file-button").disabled = value;
     this.change_butt_dis = value;
   }
+
 
   openFile(id) {
     this.content_sub = this.db.object(this.current_dir + '/' + id).valueChanges().subscribe(
@@ -140,6 +149,7 @@ export class ImportantComponent implements OnInit {
     });
   }
 
+
   changeFile(id) {
     this.show_content = !this.show_content;
     this.show_change_content_form = !this.show_change_content_form ;
@@ -150,6 +160,7 @@ export class ImportantComponent implements OnInit {
       });
     }
   }
+
 
   changeFileSubmit() {
     this.show_content = true;

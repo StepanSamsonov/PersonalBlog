@@ -7,10 +7,10 @@ import {
   Input,
   Output
 } from '@angular/core';
-import {AngularFireDatabase} from "angularfire2/database";
+import { AngularFireDatabase } from "angularfire2/database";
 
 import { MatterListService } from '../parts/matters/matter-post/matter-post.service';
-import { links } from '../stuff/links';
+import { NotificationsService } from "./notifications.service";
 
 
 declare var Notification;
@@ -46,31 +46,24 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
 
   private instances: Notification[] = [];
   matters: any[];
-  remind_period: number = 5;
-  hours_to_remind: number = 12;
-  minutes_to_remid: number = 0;
-  time_notif: number = 2000;
   second_period_to_update_time: number = 60;
-  use_notific: boolean = false;
 
   constructor(private MatterListService: MatterListService,
-              private db: AngularFireDatabase) { }
+              private db: AngularFireDatabase,
+              private NotificationsService: NotificationsService) { }
 
 
   public checkCompatibility () {
     return !!('Notification' in window);
   }
 
-
   public isPermissionGranted (permission) {
     return permission === 'granted';
   }
 
-
   public requestPermission (callback) {
     return Notification.requestPermission(callback);
   }
-
 
   public show () {
     if (!this.checkCompatibility()) {
@@ -83,7 +76,6 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
       }
     });
   }
-
 
   public create () {
     if (this.title === undefined) {
@@ -111,7 +103,6 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
     return notification;
   }
 
-
   public close (notification): void {
     if (this.closeDelay) {
       setTimeout(() => {
@@ -122,12 +113,10 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-
   public closeAll (): void {
     this.instances.map(notification => this.close(notification));
     this.instances = [];
   }
-
 
   attachEventHandlers (notification): void {
     notification.onshow = () => {
@@ -147,87 +136,41 @@ export class NotificationsComponent implements OnInit, OnChanges, OnDestroy {
     };
   }
 
-
   public ngOnInit (): void {
     this.onLoad.emit({});
 
     setInterval(() => {
       let into = true;
-      this.db.object('/').valueChanges().subscribe(data => {
-        if (into) {
-          const time = (data as any).const.time.split(':');
-          this.hours_to_remind = parseInt(time[0]);
-          this.minutes_to_remid = parseInt(time[1]);
-          this.use_notific = (data as any).const.push === 'true';
-          const now = new Date();
+      this.NotificationsService.getRoot()
+        .subscribe(data => {
+          if (into) {
+            let notify_data = NotificationsService.prepareData(data);
 
-          if (this.hours_to_remind === now.getHours() && this.minutes_to_remid === now.getMinutes()
-            && this.use_notific) {
-
-            let matters = (data as any).matters;
-            let not_data = [];
-            for (let id in matters) {
-              let {description, icon, name, priority, timeover} = matters[id];
-              const now = new Date().getTime();
-              const end = new Date(timeover).getTime();
-              let diff = Math.ceil((end - now) / (1000 * 60 * 60 * 24));
-              let days = '';
-              if (diff % 10 == 1) {
-                days = ' день';
-              } else if (diff % 10 == 2 || diff % 10 == 3 || diff % 10 == 4) {
-                days = ' дня';
-              } else {
-                days = ' дней';
-              }
-              if (diff < this.remind_period && diff > 0) {
-                const closeDelay = this.time_notif;
-                const title = "Внимание!";
-                const body = name + "\nОсталось: " + diff + days;
-                let icon = '';
-                if (priority.indexOf('success') != -1) {
-                  icon = links.green_notification_icon;
-                }
-                if (priority.indexOf('warning') != -1) {
-                  icon = links.yellow_notification_icon;
-                }
-                if (priority.indexOf('danger') != -1) {
-                  icon = links.red_notification_icon;
-                }
-                not_data.push({closeDelay: closeDelay, title: title, body: body, icon: icon});
-              }
-            }
-
-            if (not_data) {
+            if (notify_data.length) {
               let i = 0;
-
               let interval = setInterval(() => {
                 this.closeAll();
-                let elem = not_data[i];
+                let elem = notify_data[i];
                 this.title = elem.title;
                 this.body = elem.body;
                 this.closeDelay = elem.closeDelay;
                 this.icon = elem.icon;
                 this.create();
                 i += 1;
-                if (not_data.length === i) {
+                if (notify_data.length === i) {
                   clearInterval(interval);
                 }
               }, 4000);
               this.closeAll();
             }
           }
-        }
-        into = false;
+      into = false;
       });
     }, 1000*this.second_period_to_update_time);
   }
 
-
   public ngOnDestroy (): void {
-    this.closeAll();
-    }
+    this.closeAll();}
 
-
-  public ngOnChanges(): void {
-  }
+  public ngOnChanges(): void { }
 }

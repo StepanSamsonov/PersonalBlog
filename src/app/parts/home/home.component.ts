@@ -1,9 +1,13 @@
 import { AngularFireDatabase } from "angularfire2/database";
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+
+import { Subject } from "rxjs/Subject";
+import "rxjs/add/operator/takeUntil";
 
 import { AuthService } from '../../auth/services/auth.service';
 import { VisitsComponent } from '../../visits/visits.component';
+import { MainService } from './home.service';
 
 
 @Component({
@@ -11,7 +15,7 @@ import { VisitsComponent } from '../../visits/visits.component';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   change_time_form: FormGroup;
   time: any;
@@ -21,48 +25,42 @@ export class HomeComponent implements OnInit {
   chart_data: number[] = [];
   show_mess: boolean = false;
 
+  private destroyStream = new Subject<void>();
 
   constructor(private fb: FormBuilder,
               private db: AngularFireDatabase,
               private vs: VisitsComponent,
-              private AuthService: AuthService) { }
-
+              private AuthService: AuthService,
+              private MainService: MainService) { }
 
   ngOnInit() {
     this.vs.updateVisitData();
     this.createTimeForm();
     this.createEmailForm();
-    this.db.object('const').valueChanges().subscribe(data => {
+    this.MainService.getConst()
+      .takeUntil(this.destroyStream)
+      .subscribe(data => {
       this.chart_data = (data as any).chart_data.split(' ').map(Number);
-      this.lineChartData = [
-        {data: this.chart_data, label: 'Посещаемость'}
-        ]
-    });
-    this.db.object('const').valueChanges().subscribe(data => {
+      this.lineChartData = [ {data: this.chart_data, label: 'Посещаемость'} ];
+
       this.time = (data as any).time;
       this.main_email = (data as any).email;
       this.push = (data as any).push;
-
-      let radios = document.getElementsByName('push_nots');
-      for (let i = 0, length = radios.length; i < length; i++) {
-        if ((radios[i] as HTMLInputElement).value === this.push)  {
-          (radios[i] as HTMLInputElement).checked = true;
-        }
-      }
-    })
+      MainService.setInitialRadio(this.push);
+    });
   }
-
 
   isLoggedIn() {
     return this.AuthService.isLoggedIn();
   }
 
-
   showMess() {
     this.show_mess = true;
-    setTimeout(() => {this.show_mess = false}, 2000);
+    let interval = setTimeout(() => {
+      this.show_mess = false;
+      clearInterval(interval);
+    }, 2000);
   }
-
 
   createTimeForm() {
     this.change_time_form = this.fb.group({
@@ -70,17 +68,13 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
   changeTime() {
     let {time} = this.change_time_form.value;
-    if (time != '') {
-      this.db.object('const').update({time: time});
-    }
+    this.MainService.changeTime(time);
     this.time = time;
     this.createTimeForm();
     this.showMess();
   }
-
 
   createEmailForm() {
     this.change_email_form = this.fb.group({
@@ -88,30 +82,19 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
   changeEmail() {
     let {email} = this.change_email_form.value;
-    if (email != '') {
-      this.db.object('const').update({email: email});
-    }
+    this.MainService.changeEmail(email);
     this.main_email = email;
     this.createEmailForm();
     this.showMess();
   }
 
-
   changePush() {
-    let radios = document.getElementsByName('push_nots');
-    for (let i = 0, length = radios.length; i < length; i++) {
-      if ((radios[i] as HTMLInputElement).checked)  {
-        this.push = (radios[i] as HTMLInputElement).value;
-
-        this.db.object('const').update({push: this.push});
-      }
-    }
+    let radios = document.getElementsByName('push_notifications');
+    this.push = this.MainService.updatePush(radios);
     this.showMess();
   }
-
 
   public lineChartData:Array<any> = [
     {data: this.chart_data, label: 'Посещаемость'},
@@ -135,4 +118,9 @@ export class HomeComponent implements OnInit {
   public lineChartType:string = 'line';
   public chartClicked(e:any):void { }
   public chartHovered(e:any):void { }
+
+  ngOnDestroy() {
+    this.destroyStream.next();
+    this.destroyStream.complete();
+  }
 }

@@ -1,15 +1,14 @@
-import { AngularFireModule } from "angularfire2";
 import { CommonModule } from '@angular/common';
-import { environment } from "../../../../environments/environment";
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { ThoughtsFormComponent } from './thoughts-form.component';
+import { ThoughtsFormService } from "./thoughts-form.service";
+
 
 
 @NgModule({
   imports: [
-    AngularFireModule.initializeApp(environment.firebase),
     CommonModule,
     ReactiveFormsModule,
   ],
@@ -18,6 +17,9 @@ import { ThoughtsFormComponent } from './thoughts-form.component';
   ],
   exports: [
     ThoughtsFormComponent,
-  ]
+  ],
+  providers: [
+    ThoughtsFormService,
+  ],
 })
 export class ThoughtsFormModule { }

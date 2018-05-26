@@ -1,16 +1,14 @@
-import { AngularFireModule } from "angularfire2";
 import { ChartsModule } from 'ng2-charts';
 import { CommonModule } from '@angular/common';
-import { environment } from "../../../environments/environment";
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { HomeComponent } from "./home.component";
+import {MainService} from "./home.service";
 
 
 @NgModule({
   imports: [
-    AngularFireModule.initializeApp(environment.firebase),
     ChartsModule,
     CommonModule,
     ReactiveFormsModule,
@@ -18,8 +16,8 @@ import { HomeComponent } from "./home.component";
   declarations: [
     HomeComponent,
   ],
-  exports: [
-    HomeComponent,
-  ],
+  providers: [
+    MainService,
+  ]
 })
 export class HomeModule { }

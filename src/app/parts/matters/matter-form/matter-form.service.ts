@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import {AngularFireDatabase} from "angularfire2/database";
+import { AngularFireDatabase } from "angularfire2/database";
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';

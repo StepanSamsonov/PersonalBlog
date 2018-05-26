@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
-import { links } from "../../../stuff/links";
 
 import {AngularFireDatabase} from "angularfire2/database";
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+
+import { environment } from "../../../../environments/environment";
+import { links } from "../../../stuff/links";
 
 
 @Injectable()
@@ -16,7 +18,7 @@ export class MatterListService {
               private http: HttpClient) { }
 
   getMatters(): Observable<any[]> {
-    return this.http.get('https://dashablog-55ba7.firebaseio.com/matters.json')
+    return this.http.get(environment.firebase.databaseURL + '/matters.json')
       .map((data) => {
         if (!data) {
           return [];

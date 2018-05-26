@@ -7,7 +7,7 @@
 
   <div id="dir-shower" class="list-group-item list-group-item-light">
     <div>
-      <div class="list-group" *ngFor="let catalog of (availabel_catalogs)">
+      <div class="list-group" *ngFor="let catalog of (available_catalogs)">
         <div class="list-group-item line-elem-container">
           <div (click)="changeDir(catalog.name)">
             <div class="catalog-name">{{catalog.name}}</div>
@@ -16,14 +16,14 @@
                   (click)="delDir(catalog.id, catalog.name)">&times;</button>
         </div>
       </div>
-      <div class="list-group" *ngFor="let file of (availabel_files)">
-        <div class="list-group-item list-group-item-primary line-elem-container" (click)="openFile(file.id)">
+      <div class="list-group" *ngFor="let file of (available_files)">
+        <div class="list-group-item list-group-item-primary line-elem-container" (click)="changeFileOpenness(file.id)">
           <div class="catalog-name">{{file.name}}</div>
           <button type="button" class="btn-sm btn-outline-danger"
                   (click)="delFile(file.id)">&times;</button>
         </div>
       </div>
-      <div *ngIf="(availabel_catalogs.length === 0 && availabel_files.length === 0)">
+      <div *ngIf="(available_catalogs.length === 0 && available_files.length === 0)">
         <p>Здесь ничего нет</p>
       </div>
     </div>
@@ -31,20 +31,20 @@
 
   <div id="buttons-setting">
     <div *ngIf="show_change_content_form">
-      <button class="btn btn-success" (click)="changeFileSubmit()">
+      <button class="btn btn-success" (click)="changeFile()">
         Сохранить
       </button>
     </div>
-    <button class="btn btn-primary spec-butt" (click)="showcloseForm()" id="add-button">
+    <button class="btn btn-primary spec-butt" (click)="changeCreateFormOpenness()" id="add-button">
       {{show_create_form ? 'Скрыть' : 'Создать'}}
     </button>
-    <button id="change-file-button" [disabled]="change_butt_dis" class="btn btn-primary spec-butt" (click)="changeFile(content_id)">
+    <button id="change-file-button" [disabled]="change_butt_disabled" class="btn btn-primary spec-butt" (click)="changeFileFormOpenness(content_id)">
       {{show_change_content_form ? 'Отмена' : 'Изменить'}}
     </button>
   </div>
 
   <div id="create-form-container" *ngIf="show_create_form">
-    <form class="form-horizontal" [formGroup]="dir_form" id="create-form">
+    <form class="form-horizontal" [formGroup]="create_form" id="create-form">
       <div class="form-group">
         <label for="form-title">Имя</label>
         <input type="text" class="form-control" id="form-title"
@@ -57,7 +57,7 @@
           <option value="catalog">Папка</option>
         </select>
       </div>
-      <button class="btn btn-success" (click)="createFile()">Создать</button>
+      <button class="btn btn-success" (click)="createElement()">Создать</button>
     </form>
   </div>
 
@@ -87,7 +87,7 @@
     <div *ngIf="(content.length === 0)">
       {{setChangeFileButton(true)}}
       <h2 class="list-group-item list-group-item-secondary">Пусто</h2>
-      <div class="text-content">&emsp;Тут нечего показывать. Уходите.</div>
+      <div class="text-content">&emsp;Тут нечего показывать.</div>
     </div>
   </div>
 </div>

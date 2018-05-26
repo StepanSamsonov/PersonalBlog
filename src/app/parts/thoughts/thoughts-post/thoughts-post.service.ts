@@ -7,6 +7,7 @@ import { AngularFireDatabase } from "angularfire2/database";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
+import { environment } from "../../../../environments/environment";
 
 
 @Injectable()
@@ -17,7 +18,7 @@ export class ThoughtsListService {
 
 
   getThoughts(): Observable<any[]> {
-    return this.http.get('https://dashablog-55ba7.firebaseio.com/blog.json')
+    return this.http.get(environment.firebase.databaseURL + '/blog.json')
       .map((data) => {
         if (!data) {
           return [];
